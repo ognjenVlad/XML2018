@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+ <user xmlns="http://www.zdravstvo.com/seme/user" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.zdravstvo.com/seme/user xsd/user.xsd" aktivan="true" id="http://www.zdravstvo.com/seme/user/id68">
+	 <name datatype="xs:string">Predrag</name>
+	 <lastname datatype="xs:string">Stankovic</lastname>
+	 <jmbg datatype="xs:string">2305979265742</jmbg>
+	 <username>predrag</username>
+	 <password>123456</password>
+</user>
