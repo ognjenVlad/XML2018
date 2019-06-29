@@ -30,7 +30,7 @@ public class PacientController {
         User pacijent = (User) unmarshaller.unmarshal(new ClassPathResource("schema/user.xml").getFile());
         System.out.println(pacijent.toString());
         pacientService.save(pacijent);
-        pacijent = pacientService.findById("2305979265742");
+        pacijent = pacientService.findById("http://www.health_care.com/seme/user/id68");
 
         return new ResponseEntity<User>(pacijent, HttpStatus.OK);
     }

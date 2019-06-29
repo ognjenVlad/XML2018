@@ -48,7 +48,7 @@ public class PacientRepository {
     	Database database = this.connectUtil.connectToDatabase(AuthenticationUtilities.loadProperties());
         DatabaseManager.registerDatabase(database);
         String collectionId = "/db/health_care_system/pacients";
-        String documentId = pacient.getJmbg();
+        String documentId = pacient.getId();
         // zapoceto
         System.out.println(documentId);
         Collection col = null;
