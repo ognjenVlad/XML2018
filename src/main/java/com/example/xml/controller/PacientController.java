@@ -25,13 +25,13 @@ public class PacientController {
 	@RequestMapping(method = RequestMethod.GET)
     public ResponseEntity<User> getPacijent() throws Exception{
 		System.out.println("aaaaa");
-        JAXBContext context = JAXBContext.newInstance(User.class);
+        JAXBContext context = JAXBContext.newInstance(com.example.xml.model.User.class);
         Unmarshaller unmarshaller = context.createUnmarshaller();
         User pacijent = (User) unmarshaller.unmarshal(new ClassPathResource("schema/user.xml").getFile());
         System.out.println(pacijent.toString());
         pacientService.save(pacijent);
-        pacijent = pacientService.findById("http://www.zdravstvo.com/seme/user/id68");
+        pacijent = pacientService.findById("2305979265742");
 
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<User>(pacijent, HttpStatus.OK);
     }
 }

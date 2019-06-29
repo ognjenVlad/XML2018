@@ -68,8 +68,11 @@ public class ConnectUtil {
 	
 	public static Collection getOrCreateCollection(String collectionUri, int offset,
         AuthenticationUtilities.ConnectionProperties conn) throws XMLDBException {
+		System.out.println("AAAA");
+		System.out.println(collectionUri);
 		Collection col = DatabaseManager.getCollection(conn.uri + collectionUri, conn.user, conn.password);
         System.out.println(col);
+        System.out.println("AAAA12321312");
         // create the collection if it does not exist
         if(col == null) {
         

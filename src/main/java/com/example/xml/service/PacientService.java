@@ -12,12 +12,11 @@ public class PacientService {
 	@Autowired
 	PacientRepository pacientRepository;
 
-	public User save(User pacient) {
+	public void save(User pacient) {
 		try {
-			return (User) pacientRepository.save(pacient);
+			pacientRepository.save(pacient);
 		} catch (Exception e) {
 			e.printStackTrace();
-			return null;
 		}
 	}
 	
