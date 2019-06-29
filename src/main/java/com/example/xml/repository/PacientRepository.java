@@ -47,7 +47,7 @@ public class PacientRepository {
     public XMLResource save(User pacient) throws  Exception{
     	Database database = this.connectUtil.connectToDatabase(AuthenticationUtilities.loadProperties());
         DatabaseManager.registerDatabase(database);
-        String collectionId = "/db/zdravstveni_sistem/pacijenti";
+        String collectionId = "/db/health_care_system/pacients";
         String documentId = pacient.getJmbg();
         // zapoceto
         System.out.println(documentId);
