@@ -5,5 +5,5 @@
 // Generated on: 2019.06.27 at 07:12:01 PM CEST 
 //
 
-@javax.xml.bind.annotation.XmlSchema(namespace = "http://www.zdravstvo.com/seme/user", elementFormDefault = javax.xml.bind.annotation.XmlNsForm.QUALIFIED)
+@javax.xml.bind.annotation.XmlSchema(namespace = "http://www.health_care.com/user", elementFormDefault = javax.xml.bind.annotation.XmlNsForm.QUALIFIED)
 package com.example.xml.model;

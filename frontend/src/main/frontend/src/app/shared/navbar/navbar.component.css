@@ -1,0 +1,37 @@
+.navbar-darkblue {
+  background-color: #2e2e30;
+  border-width: 0;
+  top: 0;
+  height: 30px !important;
+  z-index: 123;
+  margin-top: 0;
+}
+
+.navbar-blue {
+  margin-bottom: 0!important;
+  background-color: rgb(66, 139, 202);
+  border-width: 5;
+  top: 0;
+  margin-right:5px;
+  z-index: 123;
+  margin-top: 0;
+}
+
+.navbar-left, .navbar-right {
+  margin-top: 5px;
+}
+
+.navbar {
+  margin-bottom: 0!important;
+  border-radius: 0px;
+}
+
+.navbar-home {
+  margin-top: -0.5px;
+  margin-left: 10px;
+}
+
+.navbar-personal-dropdown {
+  margin-top: 2px;
+  margin-bottom: 2px;
+}

@@ -3,8 +3,8 @@
            xmlns:vc="http://www.w3.org/2007/XMLSchema-versioning" 
            elementFormDefault="qualified"
            vc:minVersion="1.1" 
-           targetNamespace="http://www.zdravstvo.com/seme/user"
-           xmlns:user="http://www.zdravstvo.com/seme/user">
+           targetNamespace="http://www.health_care.com/user"
+           xmlns:user="http://www.health_care.com/user">
 	<xs:simpleType name="jmbg">
         <xs:restriction base="xs:string">
             <xs:pattern value="[0-9]{13}"/>

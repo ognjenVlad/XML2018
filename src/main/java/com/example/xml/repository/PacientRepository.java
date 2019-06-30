@@ -19,9 +19,13 @@ import com.example.xml.util.DBData;
 
 import org.xmldb.api.base.Collection;
 import org.xmldb.api.base.Database;
+import org.xmldb.api.base.Resource;
+import org.xmldb.api.base.ResourceIterator;
+import org.xmldb.api.base.ResourceSet;
 import org.xmldb.api.base.XMLDBException;
 import org.xmldb.api.modules.XMLResource;
 import org.xmldb.api.DatabaseManager;
+import org.xmldb.api.modules.XPathQueryService;
 
 
 @Repository
@@ -35,7 +39,7 @@ public class PacientRepository {
 	
 	
     public User findPacientById(String id) throws  Exception{
-    	 String collectionId = "/db/zdravstveni_sistem/pacijenti";
+    	 String collectionId = "/db/health_care_system/pacients";
          String documentId = id.trim();
          DBData data = this.connectUtil.getReourceById( collectionId, documentId, AuthenticationUtilities.loadProperties());
          JAXBContext context = JAXBContext.newInstance("com.example.xml.model");
@@ -44,13 +48,42 @@ public class PacientRepository {
          return pacient;
     }
     
+    public User findByUsername(String username) throws  Exception{
+    	Database database = this.connectUtil.connectToDatabase(AuthenticationUtilities.loadProperties());
+        DatabaseManager.registerDatabase(database);
+    	String collectionId = "/db/health_care_system/pacients";
+    	Collection col = ConnectUtil.getOrCreateCollection( collectionId, 0, AuthenticationUtilities.loadProperties());
+        XPathQueryService xpathService = (XPathQueryService) col.getService("XPathQueryService", "1.0");
+        xpathService.setProperty("indent", "yes");
+        xpathService.setNamespace("", "http://www.health_care.com/user");
+        String xpathExp = "//user/*[contains(local-name(),'username')][.=\"" + username + "\"]/..";
+		ResourceSet result = xpathService.query(xpathExp);
+        ResourceIterator i = result.getIterator();
+        Resource next = null;
+        User user = null;
+        while(i.hasMoreResources()) {
+            try {
+                next = i.nextResource();
+                JAXBContext context = JAXBContext.newInstance("com.example.xml.model");
+                Unmarshaller unmarshaller = context.createUnmarshaller();
+                user = (User) unmarshaller.unmarshal(((XMLResource)next).getContentAsDOM());
+            } finally {
+                try {
+                    ((EXistResource)next).freeResources();
+                } catch (XMLDBException xe) {
+                    xe.printStackTrace();
+                }
+            }
+            
+        }
+        return user;
+    }
+    
     public XMLResource save(User pacient) throws  Exception{
     	Database database = this.connectUtil.connectToDatabase(AuthenticationUtilities.loadProperties());
         DatabaseManager.registerDatabase(database);
         String collectionId = "/db/health_care_system/pacients";
-        String documentId = pacient.getId();
-        // zapoceto
-        System.out.println(documentId);
+        String documentId = pacient.getJmbg();
         Collection col = null;
         XMLResource res = null;
         OutputStream os = new ByteArrayOutputStream();

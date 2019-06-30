@@ -10,28 +10,27 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.xml.model.User;
-import com.example.xml.service.PacientService;
+import com.example.xml.service.PatientService;
 
 @RestController
 @RequestMapping(value = "pacient")
 public class PacientController {
 
 	@Autowired
-	PacientService pacientService;
+	PatientService patientService;
 	
 	@RequestMapping(method = RequestMethod.GET)
-    public ResponseEntity<User> getPacijent() throws Exception{
-		System.out.println("aaaaa");
-        JAXBContext context = JAXBContext.newInstance(com.example.xml.model.User.class);
-        Unmarshaller unmarshaller = context.createUnmarshaller();
-        User pacijent = (User) unmarshaller.unmarshal(new ClassPathResource("schema/user.xml").getFile());
-        System.out.println(pacijent.toString());
-        pacientService.save(pacijent);
-        pacijent = pacientService.findById("http://www.health_care.com/seme/user/id68");
+    public ResponseEntity<User> getPacijent(@RequestParam String id) throws Exception{
+//        JAXBContext context = JAXBContext.newInstance(com.example.xml.model.User.class);
+//        Unmarshaller unmarshaller = context.createUnmarshaller();
+//        User u = (User) unmarshaller.unmarshal(new ClassPathResource("schema/user.xml").getFile());
+//        patientService.save(u);
+        User u = patientService.findById(id);
 
-        return new ResponseEntity<User>(pacijent, HttpStatus.OK);
+        return new ResponseEntity<User>(u, HttpStatus.OK);
     }
 }

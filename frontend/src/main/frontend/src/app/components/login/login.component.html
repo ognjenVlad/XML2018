@@ -1,0 +1,15 @@
+<div id="fullscreen_bg" class="fullscreen_bg">
+
+  <div class="container">
+
+    <form class="form-signin" [formGroup]="loginForm" (ngSubmit)="login()">
+      <h1 class="form-signin-heading text-muted">Sign In</h1>
+      <input type="text" class="form-control"  formControlName="username" placeholder="Username" autofocus="">
+      <input type="password" class="form-control"  formControlName="password" placeholder="Password">
+      <button class="btn btn-lg btn-primary btn-block" type="submit">
+        Sign In
+      </button>
+    </form>
+
+  </div>
+</div>
