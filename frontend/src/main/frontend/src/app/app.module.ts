@@ -12,13 +12,15 @@ import { HomeComponent } from './components/home/home.component';
 import { AnonymousGuard } from './shared/guards/anonymous.guard';
 import { AuthGuard } from './shared/guards/auth.guard';
 import { NavbarComponent } from './shared/navbar/navbar.component';
+import { ChooseDoctorComponent } from './components/choose-doctor/choose-doctor.component';
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     RegisterComponent,
     HomeComponent,
-    NavbarComponent
+    NavbarComponent,
+    ChooseDoctorComponent
   ],
   imports: [
     BrowserModule,

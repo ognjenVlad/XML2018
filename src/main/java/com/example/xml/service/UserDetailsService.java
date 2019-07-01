@@ -29,7 +29,7 @@ public class UserDetailsService implements org.springframework.security.core.use
             throw new UsernameNotFoundException(String.format("There is no account with username '%s'.", username));
         } else {
             List<GrantedAuthority> grantedAuthorities = new ArrayList<>();
-            grantedAuthorities.add(new SimpleGrantedAuthority("pacient"));
+            grantedAuthorities.add(new SimpleGrantedAuthority(u.getRole()));
             return new org.springframework.security.core.userdetails.User(
                     u.getUsername(),
                     u.getPassword(),

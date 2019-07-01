@@ -30,8 +30,8 @@ public class AuthenticationTokenFilter extends UsernamePasswordAuthenticationFil
     @Override
     public void doFilter(ServletRequest request, ServletResponse response,
                          FilterChain chain) throws IOException, ServletException {
-    	System.out.println("USAO U FILTER JEBENI U KURAC VISE");
-        HttpServletRequest httpRequest = (HttpServletRequest) request;
+
+    	HttpServletRequest httpRequest = (HttpServletRequest) request;
         String authToken = httpRequest.getHeader("Authentication-Token");
         String username = jwtUtils.getUsernameFromToken(authToken);
         if (username != null

@@ -7,6 +7,7 @@ import com.example.xml.dtos.RegisterDTO;
 import com.example.xml.model.Patient;
 import com.example.xml.model.User;
 import com.example.xml.repository.PacientRepository;
+import com.example.xml.util.Roles;
 
 @Service
 public class PatientService  {
@@ -52,6 +53,7 @@ public class PatientService  {
 		user.setId(userId + dto.getJmbg());
 		user.setLbo(dto.getJmbg());
 		user.setPhone(dto.getJmbg());
+		user.setRole(Roles.PATIENT.toString());
 		return user;
 	}
 }

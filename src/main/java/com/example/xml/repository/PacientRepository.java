@@ -56,8 +56,7 @@ public class PacientRepository {
     	Collection col = ConnectUtil.getOrCreateCollection( collectionId, 0, AuthenticationUtilities.loadProperties());
         XPathQueryService xpathService = (XPathQueryService) col.getService("XPathQueryService", "1.0");
         xpathService.setProperty("indent", "yes");
-        xpathService.setNamespace("", "http://www.health_care.com/patient");
-        String xpathExp = "//user/*[contains(local-name(),'username')][.=\"" + username + "\"]/..";
+        String xpathExp = "//patient/*[contains(local-name(),'username')][.=\"" + username + "\"]/..";
 		ResourceSet result = xpathService.query(xpathExp);
         ResourceIterator i = result.getIterator();
         Resource next = null;
