@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           xmlns:vc="http://www.w3.org/2007/XMLSchema-versioning" 
+           elementFormDefault="qualified"
+           vc:minVersion="1.1" 
+           targetNamespace="http://www.health_care.com/doctor"
+           xmlns:patient="http://www.health_care.com/doctor"
+           xmlns:user="http://www.health_care.com/user">
+    	   <xs:import namespace="http://www.health_care.com/user" schemaLocation="user.xsd"/>
+    	   <xs:complexType id="parent" name="doctor">
+	       		<xs:complexContent>
+		            <xs:extension base="user:user">
+		                <xs:sequence>
+		                	<xs:element name="specialty" type="xs:string"/>
+		                	<xs:element maxOccurs="unbounded" minOccurs="0" name="patient_id" type="xs:string"/>
+	                	</xs:sequence>
+		            </xs:extension>
+	        	</xs:complexContent>
+	       </xs:complexType>
+	     <xs:element name="doctor" type="patient:doctor"/>
+	     <xs:attribute name="id" type="xs:anyURI"/>
+  </xs:schema>

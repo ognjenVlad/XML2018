@@ -10,34 +10,34 @@
             <xs:pattern value="[0-9]{13}"/>
         </xs:restriction>
     </xs:simpleType> 
-    <xs:element name="user">
-        <xs:complexType>
-            <xs:sequence>
-            	<xs:element name="name">
-                	<xs:complexType>
-                    	<xs:simpleContent>
-                        	<xs:extension base="xs:string" >
-                            	<xs:anyAttribute processContents="lax"/>
-                        	</xs:extension>
-                    	</xs:simpleContent>
-                	</xs:complexType>
-            	</xs:element>
-	            <xs:element name="lastname" type="xs:string">
-	            </xs:element>
-	            <xs:element name="jmbg" type="user:jmbg">
-	            </xs:element>
-                <xs:element name="username" type="xs:string">
-                </xs:element>
-                <xs:element name="password">
-                    <xs:simpleType>
-                        <xs:restriction base="xs:string">
-                            <xs:minLength value="6"/>
-                        </xs:restriction>
-                    </xs:simpleType>
-                </xs:element>
-            </xs:sequence>
-            <xs:attribute name="id" type="xs:anyURI" use="required"/>
-            <xs:attribute name="active" type="xs:boolean" use="required"/>
-        </xs:complexType>
+    <xs:complexType name="user">
+        <xs:sequence>
+        	<xs:element name="name">
+            	<xs:complexType>
+                	<xs:simpleContent>
+                    	<xs:extension base="xs:string" >
+                        	<xs:anyAttribute processContents="lax"/>
+                    	</xs:extension>
+                	</xs:simpleContent>
+            	</xs:complexType>
+        	</xs:element>
+         <xs:element name="lastname" type="xs:string">
+         </xs:element>
+         <xs:element name="jmbg" type="user:jmbg">
+         </xs:element>
+            <xs:element name="username" type="xs:string">
+            </xs:element>
+            <xs:element name="password">
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:minLength value="6"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+        </xs:sequence>
+        <xs:attribute name="id" type="xs:anyURI" use="required"/>
+        <xs:attribute name="active" type="xs:boolean" use="required"/>
+    </xs:complexType>
+    <xs:element name="user" type="user:user">
     </xs:element>
 </xs:schema>

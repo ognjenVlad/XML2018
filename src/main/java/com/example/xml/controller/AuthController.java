@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.xml.dtos.LoginDTO;
 import com.example.xml.dtos.RegisterDTO;
+import com.example.xml.model.Patient;
 import com.example.xml.model.User;
 import com.example.xml.security.JWTUtils;
 import com.example.xml.service.PatientService;
@@ -68,7 +69,7 @@ public class AuthController {
 			method = RequestMethod.POST)
 	public ResponseEntity<User> register(@RequestBody RegisterDTO newUser) {
 		newUser.setPassword(passwordEncoder.encode(newUser.getPassword()));
-		User u = this.patientService.mapDtoToUser(newUser);
+		Patient u = this.patientService.mapDtoToUser(newUser);
 		System.out.println(u.getId());
 		System.out.println(u.getJmbg());
 		System.out.println(u.getName().getValue());

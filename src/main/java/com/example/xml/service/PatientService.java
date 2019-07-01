@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.xml.dtos.RegisterDTO;
+import com.example.xml.model.Patient;
 import com.example.xml.model.User;
 import com.example.xml.repository.PacientRepository;
 
@@ -13,7 +14,7 @@ public class PatientService  {
 	@Autowired
 	PacientRepository pacientRepository;
 
-	public void save(User pacient) {
+	public void save(Patient pacient) {
 		try {
 			pacientRepository.save(pacient);
 		} catch (Exception e) {
@@ -21,7 +22,7 @@ public class PatientService  {
 		}
 	}
 	
-	public User findById(String id) {
+	public Patient findById(String id) {
 		try {
 			return pacientRepository.findPacientById(id);
 		} catch (Exception e) {
@@ -30,7 +31,7 @@ public class PatientService  {
 		}
 	}
 	
-	public User findByUsername(String username) {
+	public Patient findByUsername(String username) {
 		try {
 			return pacientRepository.findByUsername(username);
 		} catch (Exception e) {
@@ -39,8 +40,8 @@ public class PatientService  {
 		}
 	}
 	
-	public User mapDtoToUser(RegisterDTO dto) {
-		User user = new User();
+	public Patient mapDtoToUser(RegisterDTO dto) {
+		Patient user = new Patient();
 		User.Name name = new User.Name();
 		name.setValue(dto.getName());
 		user.setName(name);
@@ -49,6 +50,8 @@ public class PatientService  {
 		user.setPassword(dto.getPassword());
 		user.setUsername(dto.getUsername());
 		user.setId(userId + dto.getJmbg());
+		user.setLbo(dto.getJmbg());
+		user.setPhone(dto.getJmbg());
 		return user;
 	}
 }

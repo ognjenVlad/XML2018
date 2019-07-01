@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Repository;
 
+import com.example.xml.model.Patient;
 import com.example.xml.model.User;
 import com.example.xml.util.AuthenticationUtilities;
 import com.example.xml.util.ConnectUtil;
@@ -38,35 +39,35 @@ public class PacientRepository {
 	private static AuthenticationUtilities.ConnectionProperties conn;
 	
 	
-    public User findPacientById(String id) throws  Exception{
+    public Patient findPacientById(String id) throws  Exception{
     	 String collectionId = "/db/health_care_system/pacients";
          String documentId = id.trim();
          DBData data = this.connectUtil.getReourceById( collectionId, documentId, AuthenticationUtilities.loadProperties());
          JAXBContext context = JAXBContext.newInstance("com.example.xml.model");
          Unmarshaller unmarshaller = context.createUnmarshaller();
-         User pacient = (User) unmarshaller.unmarshal(data.getResource().getContentAsDOM());
+         Patient pacient = (Patient) unmarshaller.unmarshal(data.getResource().getContentAsDOM());
          return pacient;
     }
     
-    public User findByUsername(String username) throws  Exception{
+    public Patient findByUsername(String username) throws  Exception{
     	Database database = this.connectUtil.connectToDatabase(AuthenticationUtilities.loadProperties());
         DatabaseManager.registerDatabase(database);
     	String collectionId = "/db/health_care_system/pacients";
     	Collection col = ConnectUtil.getOrCreateCollection( collectionId, 0, AuthenticationUtilities.loadProperties());
         XPathQueryService xpathService = (XPathQueryService) col.getService("XPathQueryService", "1.0");
         xpathService.setProperty("indent", "yes");
-        xpathService.setNamespace("", "http://www.health_care.com/user");
+        xpathService.setNamespace("", "http://www.health_care.com/patient");
         String xpathExp = "//user/*[contains(local-name(),'username')][.=\"" + username + "\"]/..";
 		ResourceSet result = xpathService.query(xpathExp);
         ResourceIterator i = result.getIterator();
         Resource next = null;
-        User user = null;
+        Patient user = null;
         while(i.hasMoreResources()) {
             try {
                 next = i.nextResource();
                 JAXBContext context = JAXBContext.newInstance("com.example.xml.model");
                 Unmarshaller unmarshaller = context.createUnmarshaller();
-                user = (User) unmarshaller.unmarshal(((XMLResource)next).getContentAsDOM());
+                user = (Patient) unmarshaller.unmarshal(((XMLResource)next).getContentAsDOM());
             } finally {
                 try {
                     ((EXistResource)next).freeResources();
@@ -79,7 +80,7 @@ public class PacientRepository {
         return user;
     }
     
-    public XMLResource save(User pacient) throws  Exception{
+    public XMLResource save(Patient pacient) throws  Exception{
     	Database database = this.connectUtil.connectToDatabase(AuthenticationUtilities.loadProperties());
         DatabaseManager.registerDatabase(database);
         String collectionId = "/db/health_care_system/pacients";
@@ -93,7 +94,7 @@ public class PacientRepository {
 	        JAXBContext context = JAXBContext.newInstance("com.example.xml.model");
 	        Marshaller marshaller = context.createMarshaller();
 	        marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
-	        String path = new ClassPathResource("schema/user.xsd").getFile().getPath();
+	        String path = new ClassPathResource("schema/patient.xsd").getFile().getPath();
 	        marshaller.setProperty(Marshaller.JAXB_SCHEMA_LOCATION, path);
 	        marshaller.marshal(pacient, os);
 	        res.setContent(os);
