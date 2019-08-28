@@ -34,6 +34,7 @@ public class ObjectFactory {
     private final static QName _Doctor_QNAME = new QName("http://www.health_care.com/doctor", "doctor");
     private final static QName _User_QNAME = new QName("http://www.health_care.com/user", "user");
     private final static QName _Patient_QNAME = new QName("http://www.health_care.com/patient", "patient");
+    private final static QName _Record_QNAME = new QName("http://www.health_care.com/record", "record");
 
 
     /**
@@ -41,6 +42,14 @@ public class ObjectFactory {
      * 
      */
     public ObjectFactory() {
+    }
+
+    /**
+     * Create an instance of {@link Record }
+     * 
+     */
+    public Record createRecord() {
+        return new Record();
     }
 
     /**
@@ -92,6 +101,11 @@ public class ObjectFactory {
     @XmlElementDecl(namespace = "http://www.health_care.com/patient", name = "patient")
     public JAXBElement<Patient> createPatient(Patient value) {
         return new JAXBElement<Patient>(_Patient_QNAME, Patient.class, null, value);
+    }
+    
+    @XmlElementDecl(namespace = "http://www.health_care.com/record", name = "record")
+    public JAXBElement<Record> createRecord(Record value) {
+        return new JAXBElement<Record>(_Record_QNAME, Record.class, null, value);
     }
 
 }

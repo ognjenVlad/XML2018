@@ -70,11 +70,6 @@ public class AuthController {
 	public ResponseEntity<User> register(@RequestBody RegisterDTO newUser) {
 		newUser.setPassword(passwordEncoder.encode(newUser.getPassword()));
 		Patient u = this.patientService.mapDtoToUser(newUser);
-		System.out.println(u.getId());
-		System.out.println(u.getJmbg());
-		System.out.println(u.getName().getValue());
-		System.out.println(u.getLastname());
-		System.out.println(u.getPassword());
 		this.patientService.save(u);
 		return new ResponseEntity<User>(u, HttpStatus.OK);
     }

@@ -1,7 +1,5 @@
 package com.example.xml.controller;
 
-import java.util.ArrayList;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -12,34 +10,35 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.xml.dtos.DoctorDTO;
+import com.example.xml.dtos.RecordDTO;
 import com.example.xml.dtos.RegisterDTO;
-import com.example.xml.model.Doctor;
+import com.example.xml.model.Patient;
+import com.example.xml.model.Record;
 import com.example.xml.model.User;
-import com.example.xml.service.DoctorServiceImpl;
+import com.example.xml.service.PatientService;
+import com.example.xml.service.RecordService;
 
 @RestController
-@RequestMapping(value = "doctor")
-public class DoctorController {
-	@Autowired
-	DoctorServiceImpl doctorService;
-	
-	@RequestMapping(value = "/all-doctors",
-            produces = MediaType.APPLICATION_JSON_VALUE,
-			method = RequestMethod.GET)
-    public ResponseEntity<ArrayList<Doctor>> getAllDoctors() throws Exception{
-		ArrayList<Doctor> doctors = doctorService.getAll();
+@RequestMapping(value = "record")
+public class RecordController {
 
-        return new ResponseEntity<ArrayList<Doctor>>(doctors, HttpStatus.OK);
+	@Autowired
+	RecordService recordService;
+	
+	@RequestMapping(method = RequestMethod.GET)
+    public ResponseEntity<Record> getPacijent(@RequestParam String id) throws Exception{
+        Record record = recordService.findById(id);
+
+        return new ResponseEntity<Record>(record, HttpStatus.OK);
     }
 	
 	@RequestMapping(value = "/create",
 			consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE,
 			method = RequestMethod.POST)
-    public ResponseEntity<Doctor> save(@RequestBody DoctorDTO newUser) throws Exception{
-		Doctor d = this.doctorService.mapDtoToUser(newUser);
-		this.doctorService.save(d);
-        return new ResponseEntity<Doctor>(d, HttpStatus.OK);
+	public ResponseEntity<Record> save(@RequestBody RecordDTO newRecord) {
+		Record u = this.recordService.mapDtoToRecord(newRecord);
+		this.recordService.save(u);
+		return new ResponseEntity<Record>(u, HttpStatus.OK);
     }
 }

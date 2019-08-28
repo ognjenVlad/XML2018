@@ -1,0 +1,22 @@
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           xmlns:vc="http://www.w3.org/2007/XMLSchema-versioning" 
+           elementFormDefault="qualified"
+           vc:minVersion="1.1" 
+           targetNamespace="http://www.health_care.com/record"
+           xmlns:record="http://www.health_care.com/record">
+   	<xs:simpleType name="lbo">
+        <xs:restriction base="xs:string">
+            <xs:pattern value="\d{11}"/>
+        </xs:restriction>
+    </xs:simpleType> 
+	<xs:element name="record">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="patient_lbo" type="record:lbo"/>
+                <xs:element name="doctor_id" type="xs:anyURI"/>
+            </xs:sequence>
+            
+     	<xs:attribute name="id" type="xs:anyURI" />
+       </xs:complexType>
+   	</xs:element>
+</xs:schema>

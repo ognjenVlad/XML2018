@@ -11,7 +11,7 @@ import com.example.xml.util.Roles;
 
 @Service
 public class PatientService  {
-	public final static String userId = "http://www.health_care.com/user";
+	public final static String userId = "http://www.health_care.com/user/";
 	@Autowired
 	PacientRepository pacientRepository;
 
