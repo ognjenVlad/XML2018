@@ -1,2 +1,8 @@
 /* You can add global styles to this file, and also import other style files */
 @import "./../node_modules/bootstrap/dist/css/bootstrap.min.css";
+@import './../node_modules/font-awesome/css/font-awesome.css';
+
+body{
+  font-family: 'Open Sans', sans-serif;
+  background-image: url('http://news.mit.edu/sites/mit.edu.newsoffice/files/styles/news_article_image_top_slideshow/public/images/2017/MIT-HealthcarePrize_0.jpg?itok=cD20nueY');
+}

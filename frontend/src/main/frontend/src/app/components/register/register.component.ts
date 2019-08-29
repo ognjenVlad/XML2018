@@ -27,7 +27,6 @@ export class RegisterComponent implements OnInit {
 
   register() {
     if (!this.registerForm.valid) {
-      console.log(this.registerForm.errors);
       return;
     }
     this.authService.register(
@@ -37,7 +36,6 @@ export class RegisterComponent implements OnInit {
         lastname: this.registerForm.get('lastname').value,
         jmbg: this.registerForm.get('jmbg').value
     }).subscribe((response) => {
-      console.log(response);
       this.router.navigate(['home']);
     });
   }

@@ -26,7 +26,7 @@ public class RecordController {
 	RecordService recordService;
 	
 	@RequestMapping(method = RequestMethod.GET)
-    public ResponseEntity<Record> getPacijent(@RequestParam String id) throws Exception{
+    public ResponseEntity<Record> getRecordById(@RequestParam String id) throws Exception{
         Record record = recordService.findById(id);
 
         return new ResponseEntity<Record>(record, HttpStatus.OK);

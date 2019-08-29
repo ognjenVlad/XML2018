@@ -1,0 +1,12 @@
+.u-position--center {
+  text-align: center;
+  vertical-align: left;
+}
+
+.is-active {
+  color: black !important;
+}
+
+.color-black {
+  color: black;
+}

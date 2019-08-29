@@ -1,5 +1,5 @@
 <nav class="mb-1 navbar navbar-expand-lg navbar-dark navbar-blue">
-    <a class="navbar-brand" *ngIf="jwtService.tokenExist()" href="#">Home</a>
+    <a class="navbar-brand" routerLinkActive="is-active" *ngIf="jwtService.tokenExist()" routerLink="home">Home</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent-333"
       aria-controls="navbarSupportedContent-333" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
@@ -8,24 +8,24 @@
       <ul class="navbar-nav mr-auto">
        
         <li *ngIf="isPatient()" class="nav-item">
-          <a class="nav-link" routerLink="choose-doctor">Choose doctor</a>
+          <a class="nav-link waves-effect waves-light" routerLinkActive="is-active" routerLink="choose-doctor">Choose doctor</a>
         </li>
       </ul>
       <ul class="navbar-nav ml-auto nav-flex-icons">
         <li *ngIf="!jwtService.tokenExist()" class="nav-item">
-          <a routerLink="login" class="nav-link waves-effect waves-light">
+          <a routerLink="login" routerLinkActive="is-active" class="nav-link waves-effect waves-light">
             Login
           </a>
         </li>
         <li *ngIf="!jwtService.tokenExist()" class="nav-item">
-            <a routerLink="register" class="nav-link waves-effect waves-light">
+            <a routerLink="register" routerLinkActive="is-active" class="nav-link waves-effect waves-light">
               Register
             </a>
           </li>
         <li *ngIf="jwtService.tokenExist()" class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink-333" data-toggle="dropdown"
             aria-haspopup="true" aria-expanded="false">
-            <i class="fas fa-user"></i>
+            <i class="fa fa-user"></i>
           </a>
           <div class="dropdown-menu dropdown-menu-right"
             aria-labelledby="navbarDropdownMenuLink-333">

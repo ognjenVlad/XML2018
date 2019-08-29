@@ -20,7 +20,6 @@ export class JwtService {
   }
 
   hasRole(role: string) {
-    console.log(this.getRolesFromToken().find((item:any)=> item.authority === role));
     return this.getRolesFromToken().find((item:any)=> item.authority === role);
   }
 

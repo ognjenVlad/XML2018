@@ -44,6 +44,7 @@ public class RecordService {
 	}
 	
 	public Record mapDtoToRecord(RecordDTO dto) {
+		System.out.println(dto);
 		Record record = new Record();
 		record.setDoctorId(dto.getDoctorId());
 		record.setPatientLbo(dto.getPatientLbo());

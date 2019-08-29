@@ -50,7 +50,9 @@ public class DoctorRepository {
                 System.out.println(((XMLResource)next).getContentAsDOM());
                 JAXBContext context = JAXBContext.newInstance("com.example.xml.model");
                 Unmarshaller unmarshaller = context.createUnmarshaller();
-                doctors.add((Doctor) unmarshaller.unmarshal(((XMLResource)next).getContentAsDOM()));
+                Doctor d = (Doctor) unmarshaller.unmarshal(((XMLResource)next).getContentAsDOM());
+                d.setPassword("");
+                doctors.add(d);
             } finally {
                 try {
                     ((EXistResource)next).freeResources();

@@ -21,7 +21,6 @@ export class NavbarComponent implements OnInit {
   }
 
   isPatient() {
-    console.log(this.jwtService.hasRole(Roles.PATIENT));
     return this.jwtService.hasRole(Roles.PATIENT);
   }
 

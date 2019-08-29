@@ -78,7 +78,7 @@ public class RecordRepository {
     	Database database = this.connectUtil.connectToDatabase(AuthenticationUtilities.loadProperties());
         DatabaseManager.registerDatabase(database);
         String collectionId = "/db/health_care_system/records";
-        String documentId = record.getId();
+        String documentId = record.getPatientLbo();
         Collection col = null;
         XMLResource res = null;
         OutputStream os = new ByteArrayOutputStream();

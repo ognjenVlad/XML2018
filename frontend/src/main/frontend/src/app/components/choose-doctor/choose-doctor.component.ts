@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { PatientsService } from 'src/app/services/patients.service';
+import { Doctor } from 'src/app/models/doctor.model';
+import { Patient } from 'src/app/models/patient.model';
+import { RecordsService } from 'src/app/services/records.service';
 
 @Component({
   selector: 'app-choose-doctor',
@@ -7,9 +11,25 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ChooseDoctorComponent implements OnInit {
 
-  constructor() { }
+  doctors: Array<Doctor>;
+  patient: Patient;
+  constructor(private patientsService: PatientsService, private recordService: RecordsService) { }
 
   ngOnInit() {
+    this.patientsService.getAllDoctors().subscribe((data: any) => {
+      data = data.map((item) => {
+        return {...item, name: item.name.value}
+      });
+      this.doctors = data;
+    })
+
+    this.patientsService.getPatient().subscribe((data: any) => {
+      this.patient = {...data, name: data.name.value};
+    })
+  }
+
+  selectDoctor(doc: Doctor) {
+    this.recordService.save({doctorId: doc.id, patientLbo: this.patient.lbo, id: ''})
   }
 
 }
