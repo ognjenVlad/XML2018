@@ -6,6 +6,7 @@ import { AuthGuard } from './shared/guards/auth.guard';
 import { HomeComponent } from './components/home/home.component';
 import { AnonymousGuard } from './shared/guards/anonymous.guard';
 import { ChooseDoctorComponent } from './components/choose-doctor/choose-doctor.component';
+import { AppointmentsComponent } from './components/appointments/appointments.component';
 
 
 const routes: Routes = [
@@ -13,7 +14,8 @@ const routes: Routes = [
   { path: 'home', component: HomeComponent, canActivate: [AuthGuard]},
   { path: 'choose-doctor', component: ChooseDoctorComponent, canActivate: [AuthGuard]},
   { path: 'login', component: LoginComponent, canActivate: [AnonymousGuard]},
-  { path: 'register', component: RegisterComponent , canActivate: [AnonymousGuard]}
+  { path: 'register', component: RegisterComponent , canActivate: [AnonymousGuard]},
+  { path: 'make-appointment', component: AppointmentsComponent, canActivate: [AuthGuard]},
 ];
 @NgModule({
   imports: [RouterModule.forRoot(routes)],

@@ -1,23 +1,25 @@
 package com.example.xml.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.xml.dtos.RegisterDTO;
 import com.example.xml.model.Patient;
 import com.example.xml.model.User;
-import com.example.xml.repository.PacientRepository;
+import com.example.xml.repository.PatientRepository;
 import com.example.xml.util.Roles;
 
 @Service
 public class PatientService  {
 	public final static String userId = "http://www.health_care.com/user/";
 	@Autowired
-	PacientRepository pacientRepository;
+	PatientRepository patientRepository;
 
 	public void save(Patient pacient) {
 		try {
-			pacientRepository.save(pacient);
+			patientRepository.save(pacient);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -25,7 +27,7 @@ public class PatientService  {
 	
 	public Patient findById(String id) {
 		try {
-			return pacientRepository.findPacientById(id);
+			return patientRepository.findPacientById(id);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
@@ -34,7 +36,16 @@ public class PatientService  {
 	
 	public Patient findByUsername(String username) {
 		try {
-			return pacientRepository.findByUsername(username);
+			return patientRepository.findByUsername(username);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
+	public List<Patient> simpleSearch(String text) {
+		try {
+			return patientRepository.simpleSearch(text);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;

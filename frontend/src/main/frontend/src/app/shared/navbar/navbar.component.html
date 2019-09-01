@@ -10,6 +10,9 @@
         <li *ngIf="isPatient()" class="nav-item">
           <a class="nav-link waves-effect waves-light" routerLinkActive="is-active" routerLink="choose-doctor">Choose doctor</a>
         </li>
+        <li *ngIf="isPatient()" class="nav-item">
+          <a class="nav-link waves-effect waves-light" routerLinkActive="is-active" routerLink="make-appointment">Make an appointment</a>
+        </li>
       </ul>
       <ul class="navbar-nav ml-auto nav-flex-icons">
         <li *ngIf="!jwtService.tokenExist()" class="nav-item">

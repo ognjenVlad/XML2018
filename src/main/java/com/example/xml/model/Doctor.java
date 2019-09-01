@@ -40,7 +40,8 @@ import javax.xml.bind.annotation.XmlType;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "doctor", propOrder = {
     "specialty",
-    "patientId"
+    "patientId",
+    "appointmentIds"
 })
 @XmlRootElement(name = "doctor")
 public class Doctor
@@ -51,6 +52,8 @@ public class Doctor
     protected String specialty;
     @XmlElement(name = "patient_id")
     protected List<String> patientId;
+    @XmlElement(name = "appointment_ids")
+    protected List<String> appointmentIds;
 
     /**
      * Gets the value of the specialty property.
@@ -103,6 +106,18 @@ public class Doctor
             patientId = new ArrayList<String>();
         }
         return this.patientId;
+    }
+    
+    public List<String> getAppointmentIds() {
+        if (appointmentIds == null) {
+        	appointmentIds = new ArrayList<String>();
+        }
+        return this.appointmentIds;
+    }
+    
+    public void setAppointmentIds(List<String> value) {
+    	
+        this.appointmentIds = value;
     }
 
 }

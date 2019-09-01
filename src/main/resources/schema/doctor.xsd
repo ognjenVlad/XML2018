@@ -13,9 +13,11 @@
 		                <xs:sequence>
 		                	<xs:element name="specialty" type="xs:string"/>
 		                	<xs:element maxOccurs="unbounded" minOccurs="0" name="patient_id" type="xs:string"/>
+		                	<xs:element maxOccurs="unbounded" minOccurs="0" name="appointment_ids"></xs:element>
 	                	</xs:sequence>
 		            </xs:extension>
 	        	</xs:complexContent>
+	        	
 	       </xs:complexType>
 	     <xs:element name="doctor" type="patient:doctor"/>
 	     <xs:attribute name="id" type="xs:anyURI"/>

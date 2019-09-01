@@ -1,0 +1,20 @@
+<form [formGroup]="form" (ngSubmit)="createAppointment(form)">
+  <div>
+    <mat-form-field>
+      <input matInput [value]="" [matDatepicker]="picker1" placeholder="Appointment date" (dateChange)="dateChanged()" formControlName="date">
+      <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+      <mat-datepicker #picker1></mat-datepicker>
+    </mat-form-field>
+  </div>
+  
+  <div>
+    <mat-form-field>
+      <mat-select formControlName="appointment" placeholder="Appointment time">
+        <mat-option *ngFor="let appointment of freeAppointments" [value]="appointment">
+          {{appointment}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+  <input type="submit" value="Make an appointment" md-button class="btn btn-primary">
+</form>

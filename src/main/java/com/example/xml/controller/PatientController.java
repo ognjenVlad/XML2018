@@ -1,5 +1,7 @@
 package com.example.xml.controller;
 
+import java.util.List;
+
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.Unmarshaller;
 
@@ -14,12 +16,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.xml.model.Patient;
 import com.example.xml.model.User;
 import com.example.xml.service.PatientService;
 
 @RestController
 @RequestMapping(value = "patient")
-public class PacientController {
+public class PatientController {
 
 	@Autowired
 	PatientService patientService;
@@ -38,5 +41,14 @@ public class PacientController {
         User u = patientService.findByUsername(username);
 
         return new ResponseEntity<User>(u, HttpStatus.OK);
+    }
+	
+	@RequestMapping(value = "/search",
+            produces = MediaType.APPLICATION_JSON_VALUE,
+			method = RequestMethod.GET)
+    public ResponseEntity<List<Patient>> simpleSearch(@RequestParam String text) throws Exception{
+		List<Patient> patients = patientService.simpleSearch(text);
+
+        return new ResponseEntity<List<Patient>>(patients, HttpStatus.OK);
     }
 }

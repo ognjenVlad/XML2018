@@ -13,6 +13,14 @@ import { AnonymousGuard } from './shared/guards/anonymous.guard';
 import { AuthGuard } from './shared/guards/auth.guard';
 import { NavbarComponent } from './shared/navbar/navbar.component';
 import { ChooseDoctorComponent } from './components/choose-doctor/choose-doctor.component';
+import { AppointmentsComponent } from './components/appointments/appointments.component';
+import { MatSelectModule } from '@angular/material/select';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule, MAT_DATE_LOCALE, DateAdapter, MAT_DATE_FORMATS } from '@angular/material/core';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -20,15 +28,23 @@ import { ChooseDoctorComponent } from './components/choose-doctor/choose-doctor.
     RegisterComponent,
     HomeComponent,
     NavbarComponent,
-    ChooseDoctorComponent
+    ChooseDoctorComponent,
+    AppointmentsComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     ReactiveFormsModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    MatSelectModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatFormFieldModule,
+    MatInputModule,
+    BrowserAnimationsModule
   ],
+  exports: [MatDatepickerModule],
   providers: [JwtService, AnonymousGuard, AuthGuard],
   bootstrap: [AppComponent]
 })

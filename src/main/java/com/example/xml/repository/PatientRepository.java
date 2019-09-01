@@ -2,6 +2,8 @@ package com.example.xml.repository;
 
 import java.io.ByteArrayOutputStream;
 import java.io.OutputStream;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBIntrospector;
@@ -14,7 +16,6 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Repository;
 
 import com.example.xml.model.Patient;
-import com.example.xml.model.User;
 import com.example.xml.util.AuthenticationUtilities;
 import com.example.xml.util.ConnectUtil;
 import com.example.xml.util.DBData;
@@ -31,7 +32,7 @@ import org.xmldb.api.modules.XPathQueryService;
 
 
 @Repository
-public class PacientRepository {
+public class PatientRepository {
 
 	
 	@Autowired
@@ -98,10 +99,7 @@ public class PacientRepository {
 	        marshaller.setProperty(Marshaller.JAXB_SCHEMA_LOCATION, path);
 	        marshaller.marshal(pacient, os);
 	        res.setContent(os);
-	        System.out.println("[INFO] Storing the document: " + res.getId());
-	        
 	        col.storeResource(res);
-	        System.out.println("[INFO] Done.");
         return res;
         
         } finally {
@@ -122,5 +120,36 @@ public class PacientRepository {
         }
     }
 
+    public List<Patient> simpleSearch(String content) throws  Exception{
+    	Database database = this.connectUtil.connectToDatabase(AuthenticationUtilities.loadProperties());
+        DatabaseManager.registerDatabase(database);
+    	String collectionId = "/db/health_care_system/pacients";
+    	Collection col = ConnectUtil.getOrCreateCollection( collectionId, 0, AuthenticationUtilities.loadProperties());
+        XPathQueryService xpathService = (XPathQueryService) col.getService("XPathQueryService", "1.0");
+        xpathService.setProperty("indent", "yes");
+        String xpathExp = "/patient//*[contains(text(),\"" + content + "\")]/..";
+		ResourceSet result = xpathService.query(xpathExp);
+        ResourceIterator i = result.getIterator();
+        Resource next = null;
+        List<Patient> patients = new ArrayList<Patient>();
+        Patient user = null;
+        while(i.hasMoreResources()) {
+            try {
+                next = i.nextResource();
+                JAXBContext context = JAXBContext.newInstance("com.example.xml.model");
+                Unmarshaller unmarshaller = context.createUnmarshaller();
+                user = (Patient) unmarshaller.unmarshal(((XMLResource)next).getContentAsDOM());
+                patients.add(user);
+            } finally {
+                try {
+                    ((EXistResource)next).freeResources();
+                } catch (XMLDBException xe) {
+                    xe.printStackTrace();
+                }
+            }
+            
+        }
+        return patients;
+    }
 
 }
