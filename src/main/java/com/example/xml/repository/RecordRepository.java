@@ -5,12 +5,17 @@ import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
 import org.springframework.util.SerializationUtils;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBIntrospector;
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
 import org.w3c.dom.Element;
+import org.apache.jena.query.QueryExecutionFactory;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.ModelFactory;
 import org.apache.jena.update.UpdateExecutionFactory;
@@ -44,6 +49,7 @@ import com.example.xml.util.SparqlUtil;
 public class RecordRepository {
 
 	private static final String SPARQL_NAMED_GRAPH_URI = "/health_system/sparql/metadata";
+	private static final String HEALTH_CARE_RDF_URI = "http://www.health_care.com/rdf/hs/";
 	@Autowired
     private ConnectUtil connectUtil;
 	
@@ -178,6 +184,75 @@ public class RecordRepository {
         UpdateRequest update = UpdateFactory.create(sparqlUpdate);
         UpdateProcessor processor = UpdateExecutionFactory.createRemote(update, connect.updateEndpoint);
         processor.execute();
+    }
+	public List<String> searchKartonMetadata(String criteria, String object) throws Exception{
+        String pred = "";
+        if(criteria.equals("lbo"))
+        	pred = "<" + HEALTH_CARE_RDF_URI + "lbo>";
+        else if(criteria.equals("doctor"))
+            pred = "<" + HEALTH_CARE_RDF_URI + "doctor>";
+
+        RdfUtilities.ConnectionProperties connect = RdfUtilities.loadProperties();
+
+        String select;
+        select = "?s " + pred + " \"" + object + "\"";
+
+        System.out.println("[INFO] Selecting the triples from the named graph \"" + SPARQL_NAMED_GRAPH_URI + "\".");
+        String sparqlQuery = SparqlUtil.selectData(connect.dataEndpoint + SPARQL_NAMED_GRAPH_URI, select);
+
+        org.apache.jena.query.QueryExecution query = QueryExecutionFactory.sparqlService(connect.queryEndpoint, sparqlQuery);
+
+        org.apache.jena.query.ResultSet results = query.execSelect();
+        String varName;
+        org.apache.jena.rdf.model.RDFNode varValue;
+        List<String> resultList = new ArrayList<>();
+        while (results.hasNext()) {
+
+            org.apache.jena.query.QuerySolution querySolution = results.next();
+            Iterator<String> variableBindings = querySolution.varNames();
+            while (variableBindings.hasNext()) {
+
+                varName = variableBindings.next();
+                varValue = querySolution.get(varName);
+                resultList.add(varValue.toString());
+                System.out.println(varName + ": " + varValue);
+            }
+        }
+
+        query.close();
+        return resultList;
+    }
+	
+	public List<Record> simpleSearch(String content) throws  Exception{
+    	Database database = this.connectUtil.connectToDatabase(AuthenticationUtilities.loadProperties());
+        DatabaseManager.registerDatabase(database);
+    	String collectionId = "/db/health_care_system/records";
+    	Collection col = ConnectUtil.getOrCreateCollection( collectionId, 0, AuthenticationUtilities.loadProperties());
+        XPathQueryService xpathService = (XPathQueryService) col.getService("XPathQueryService", "1.0");
+        xpathService.setProperty("indent", "yes");
+        String xpathExp = "/record//*[contains(text(),\"" + content + "\")]/..";
+		ResourceSet result = xpathService.query(xpathExp);
+        ResourceIterator i = result.getIterator();
+        Resource next = null;
+        List<Record> records = new ArrayList<Record>();
+        Record record = null;
+        while(i.hasMoreResources()) {
+            try {
+                next = i.nextResource();
+                JAXBContext context = JAXBContext.newInstance("com.example.xml.model");
+                Unmarshaller unmarshaller = context.createUnmarshaller();
+                record = (Record) unmarshaller.unmarshal(((XMLResource)next).getContentAsDOM());
+                records.add(record);
+            } finally {
+                try {
+                    ((EXistResource)next).freeResources();
+                } catch (XMLDBException xe) {
+                    xe.printStackTrace();
+                }
+            }
+            
+        }
+        return records;
     }
 
 }

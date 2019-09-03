@@ -88,6 +88,8 @@ public class PatientRepository {
         return user;
     }
     
+    
+    
     public XMLResource save(Patient pacient) throws  Exception{
     	Database database = this.connectUtil.connectToDatabase(AuthenticationUtilities.loadProperties());
         DatabaseManager.registerDatabase(database);
