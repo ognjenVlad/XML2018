@@ -28,6 +28,8 @@ public class SparqlUtil {
 
 	/* An XML serialization format for RDF data */
 	public static final String RDF_XML = "RDF/XML";
+
+	private static final String DELETE_NAMED_GRAPH_TEMPLATE = "DELETE WHERE {GRAPH <%1$s> { %2$s } }";
 	
 	public static String dropAll() {
 		return DROP_ALL;
@@ -48,6 +50,11 @@ public class SparqlUtil {
 	
 	public static String selectData(String graphURI, String sparqlCondition) {
 		return String.format(SELECT_NAMED_GRAPH_TEMPLATE, graphURI, sparqlCondition);
+	}
+	
+	public static String deleteData(String graphURI, String ntriples) {
+		System.out.println(String.format(DELETE_NAMED_GRAPH_TEMPLATE, graphURI, ntriples));
+		return String.format(DELETE_NAMED_GRAPH_TEMPLATE, graphURI, ntriples);
 	}
 	
 }

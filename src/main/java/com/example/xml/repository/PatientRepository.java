@@ -1,14 +1,19 @@
 package com.example.xml.repository;
 
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
 import java.io.OutputStream;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
-
+import com.example.xml.util.MetadataExtractor;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBIntrospector;
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
+import org.apache.jena.rdf.model.Model;
+import org.apache.jena.rdf.model.ModelFactory;
 
 import org.exist.xmldb.EXistResource;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +24,8 @@ import com.example.xml.model.Patient;
 import com.example.xml.util.AuthenticationUtilities;
 import com.example.xml.util.ConnectUtil;
 import com.example.xml.util.DBData;
+import com.example.xml.util.RdfUtilities;
+
 
 import org.xmldb.api.base.Collection;
 import org.xmldb.api.base.Database;

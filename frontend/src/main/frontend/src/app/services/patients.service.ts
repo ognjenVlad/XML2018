@@ -5,13 +5,14 @@ import { map } from 'rxjs/operators';
 import { Appointment } from '../models/appointment.model';
 import { availableAppointments } from '../constants';
 import { Patient } from '../models/patient.model';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PatientsService {
   record;
-  constructor(private http: HttpClient, private jwtService: JwtService) { }
+  constructor(private http: HttpClient, private jwtService: JwtService, private router: Router) { }
 
   getAllDoctors() {
     return this.http.get(`http://localhost:8080/doctor/all-doctors`);
@@ -58,6 +59,7 @@ export class PatientsService {
     return this.http.post(`http://localhost:8080/appointments/create`, appointment).toPromise().then
     (() => {
       alert("Appointment created!")
+      this.router.navigate(['home']);
   }).catch((error) => {
   }) ;;
   }

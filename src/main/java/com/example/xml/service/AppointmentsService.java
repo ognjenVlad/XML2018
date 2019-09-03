@@ -22,13 +22,18 @@ public class AppointmentsService {
 	
 	public void save(Appointment a) {
 		try {
+			a.setId(a.getDoctorId() + "_" + a.getPatientLbo());
 			appointmentsRepository.save(a);
 			System.out.println("123" + a.getDoctorId());
 			Doctor doc = doctorRepository.findById(a.getDoctorId());
 			List<String> appointments = doc.getAppointmentIds();
+			System.out.println(a.getId());
 			appointments.add(a.getId());
 			doc.setAppointmentIds(appointments);
-			System.out.println(doc.getJmbg());
+			for(String s: doc.getAppointmentIds()) {
+				System.out.println(s);
+			}
+			System.out.println(doc.getAppointmentIds().size());
 			doctorRepository.save(doc);
 		} catch (Exception e) {
 			e.printStackTrace();

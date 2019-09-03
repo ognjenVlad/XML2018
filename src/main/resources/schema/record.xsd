@@ -2,6 +2,8 @@
            xmlns:vc="http://www.w3.org/2007/XMLSchema-versioning" 
            elementFormDefault="qualified"
            vc:minVersion="1.1" 
+           xmlns="http://www.w3.org/ns/rdfa#"
+           xmlns:hs="http://www.health_care.com/rdf/hs/"
            targetNamespace="http://www.health_care.com/record"
            xmlns:record="http://www.health_care.com/record">
    	<xs:simpleType name="lbo">

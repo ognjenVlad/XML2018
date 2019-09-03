@@ -1,13 +1,22 @@
 package com.example.xml.repository;
 
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
 import java.io.OutputStream;
-
+import java.nio.charset.StandardCharsets;
+import org.springframework.util.SerializationUtils;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBIntrospector;
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
-
+import org.w3c.dom.Element;
+import org.apache.jena.rdf.model.Model;
+import org.apache.jena.rdf.model.ModelFactory;
+import org.apache.jena.update.UpdateExecutionFactory;
+import org.apache.jena.update.UpdateFactory;
+import org.apache.jena.update.UpdateProcessor;
+import org.apache.jena.update.UpdateRequest;
 import org.exist.xmldb.EXistResource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
@@ -27,10 +36,14 @@ import com.example.xml.model.Record;
 import com.example.xml.util.AuthenticationUtilities;
 import com.example.xml.util.ConnectUtil;
 import com.example.xml.util.DBData;
+import com.example.xml.util.MetadataExtractor;
+import com.example.xml.util.RdfUtilities;
+import com.example.xml.util.SparqlUtil;
 
 @Repository
 public class RecordRepository {
 
+	private static final String SPARQL_NAMED_GRAPH_URI = "/health_system/sparql/metadata";
 	@Autowired
     private ConnectUtil connectUtil;
 	
@@ -91,11 +104,25 @@ public class RecordRepository {
 	        String path = new ClassPathResource("schema/record.xsd").getFile().getPath();
 	        marshaller.setProperty(Marshaller.JAXB_SCHEMA_LOCATION, path);
 	        marshaller.marshal(record, os);
+	        deleteMetada(record.getId());
 	        res.setContent(os);
 	        System.out.println("[INFO] Storing the document: " + res.getId());
-	        
+	        org.w3c.dom.Node n = res.getContentAsDOM().getFirstChild();
+            ((Element)n).setAttribute("vocab", "http://www.health_care.com/rdf/hs/");
+            ((Element)n).setAttribute("about", record.getId());
+            for(int i = 0; i < n.getChildNodes().getLength(); i++){
+                if(n.getChildNodes().item(i).getNodeName().contains("patient_lbo")){
+                    ((org.w3c.dom.Element)n.getChildNodes().item(i)).setAttribute("property", "hs:lbo");
+                    ((org.w3c.dom.Element)n.getChildNodes().item(i)).setAttribute("datatype", "xs:string");
+                } else if(n.getChildNodes().item(i).getNodeName().contains("doctor_id")){
+                    ((org.w3c.dom.Element)n.getChildNodes().item(i)).setAttribute("property", "hs:doctor");
+                    ((org.w3c.dom.Element)n.getChildNodes().item(i)).setAttribute("datatype", "xs:string");
+                }
+            }
+            res.setContentAsDOM(n.getParentNode());
 	        col.storeResource(res);
-	        System.out.println("[INFO] Done.");
+	        System.out.println(res.getContent().toString());
+	        addMetadata(res.getContent().toString());
         return res;
         
         } finally {
@@ -114,6 +141,43 @@ public class RecordRepository {
 	            }
 	        }
         }
+    }
+	
+	private static void addMetadata(Object content) throws Exception{
+        RdfUtilities.ConnectionProperties connect = RdfUtilities.loadProperties();
+        MetadataExtractor metadataExtractor = new MetadataExtractor();
+        System.out.println("[INFO] Extracting metadata from RDFa attributes...");
+        InputStream in = new ByteArrayInputStream(content.toString().getBytes(StandardCharsets.UTF_8));
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
+        metadataExtractor.extractMetadata(in, out);
+
+        // Loading a default model with extracted metadata
+        Model model = ModelFactory.createDefaultModel();
+        model.read(new ByteArrayInputStream(out.toByteArray()), "RDF");
+        out = new ByteArrayOutputStream();
+        model.write(out, SparqlUtil.NTRIPLES);
+
+        System.out.println("[INFO] Extracted metadata as RDF/XML...");
+        model.write(System.out, SparqlUtil.RDF_XML);
+        model.write(System.out, SparqlUtil.NTRIPLES);
+        model.write(out, SparqlUtil.NTRIPLES);
+        // Writing the named graph
+        String sparqlUpdate = SparqlUtil.insertData(connect.dataEndpoint + SPARQL_NAMED_GRAPH_URI, new String(out.toByteArray()));
+
+        // UpdateRequest represents a unit of execution
+        UpdateRequest update = UpdateFactory.create(sparqlUpdate);
+
+        UpdateProcessor processor = UpdateExecutionFactory.createRemote(update, connect.updateEndpoint);
+        processor.execute();
+    }
+	
+	private static void deleteMetada(String id) throws Exception{
+        RdfUtilities.ConnectionProperties connect = RdfUtilities.loadProperties();
+        String delete = "<" + id + "> ?p ?o";
+        String sparqlUpdate = SparqlUtil.deleteData(connect.dataEndpoint + SPARQL_NAMED_GRAPH_URI, delete);
+        UpdateRequest update = UpdateFactory.create(sparqlUpdate);
+        UpdateProcessor processor = UpdateExecutionFactory.createRemote(update, connect.updateEndpoint);
+        processor.execute();
     }
 
 }
