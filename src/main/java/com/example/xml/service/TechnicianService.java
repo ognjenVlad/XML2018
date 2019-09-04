@@ -1,44 +1,49 @@
 package com.example.xml.service;
 
-import java.util.ArrayList;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.example.xml.dtos.DoctorDTO;
 import com.example.xml.dtos.RegisterDTO;
-import com.example.xml.model.Doctor;
 import com.example.xml.model.patient.Patient;
-import com.example.xml.model.record.Record;
 import com.example.xml.model.user.User;
-import com.example.xml.repository.DoctorRepository;
+import com.example.xml.repository.TechnicianRepository;
 import com.example.xml.util.Roles;
 
 @Service
-public class DoctorServiceImpl implements DoctorService {
-	public final static String userId = "http://www.health_care.com/doctor/";
+public class TechnicianService {
+	public final static String userId = "http://www.health_care.com/technician/";
 	@Autowired
-	DoctorRepository doctorRepository;
+	TechnicianRepository technicianRepository;
 	
-	public ArrayList<Doctor> getAll() {
+	public void save(User technician) {
 		try {
-			return doctorRepository.getAll();
+			technician.setRole(Roles.TECHNICIAN.toString());
+			technicianRepository.save(technician);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public User findById(String id) {
+		try {
+			return technicianRepository.findPacientById(id);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
 		}
 	}
 	
-	public void save(Doctor doctor) {
+	public User findByUsername(String username) {
 		try {
-			doctorRepository.save(doctor);
+			return technicianRepository.findByUsername(username);
 		} catch (Exception e) {
 			e.printStackTrace();
+			return null;
 		}
 	}
 	
-	public Doctor mapDtoToUser(DoctorDTO dto) {
-		Doctor user = new Doctor();
+	public User mapDtoToUser(RegisterDTO dto) {
+		User user = new User();
 		User.Name name = new User.Name();
 		name.setValue(dto.getName());
 		user.setName(name);
@@ -47,8 +52,6 @@ public class DoctorServiceImpl implements DoctorService {
 		user.setPassword(dto.getPassword());
 		user.setUsername(dto.getUsername());
 		user.setId(userId + dto.getJmbg());
-		user.setSpecialty(dto.getSpecialty());
-		user.setRole(Roles.DOCTOR.toString());
 		return user;
 	}
 }

@@ -7,3 +7,23 @@ body{
   font-family: 'Open Sans', sans-serif;
   background-image: url('http://news.mit.edu/sites/mit.edu.newsoffice/files/styles/news_article_image_top_slideshow/public/images/2017/MIT-HealthcarePrize_0.jpg?itok=cD20nueY');
 }
+
+.display--flex {
+  display: flex;
+}
+
+.flex--column {
+  flex-direction: column;
+}
+
+.modal--container {
+  width: 20rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal-content-margines {
+  margin-bottom: 2rem;
+  margin-left: 2rem;
+}

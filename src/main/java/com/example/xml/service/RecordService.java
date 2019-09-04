@@ -1,15 +1,13 @@
 package com.example.xml.service;
 
+import java.util.List;
+import com.example.xml.model.record.Record;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.xml.dtos.RecordDTO;
-import com.example.xml.dtos.RegisterDTO;
-import com.example.xml.model.Patient;
-import com.example.xml.model.Record;
-import com.example.xml.model.User;
 import com.example.xml.repository.RecordRepository;
-import com.example.xml.util.Roles;
 
 @Service
 public class RecordService {
@@ -51,4 +49,23 @@ public class RecordService {
 		record.setId(recordId + dto.getPatientLbo());
 		return record;
 	}
+	
+	public List<Record> search(String term) {
+		try {
+			return recordRepository.simpleSearch(term);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
+	public List<String> advancedSearch(String term, String criteria) {
+		try {
+			return recordRepository.advancedSearch(criteria, term);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
 }

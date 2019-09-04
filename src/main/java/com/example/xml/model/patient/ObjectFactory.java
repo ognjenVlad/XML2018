@@ -6,7 +6,7 @@
 //
 
 
-package com.example.xml.model;
+package com.example.xml.model.patient;
 
 import javax.xml.bind.JAXBElement;
 import javax.xml.bind.annotation.XmlElementDecl;
@@ -35,11 +35,8 @@ import com.example.xml.model.user.User;
 @XmlRegistry
 public class ObjectFactory {
 
-    private final static QName _Doctor_QNAME = new QName("http://www.health_care.com/doctor", "doctor");
     private final static QName _User_QNAME = new QName("http://www.health_care.com/user", "user");
     private final static QName _Patient_QNAME = new QName("http://www.health_care.com/patient", "patient");
-    private final static QName _Record_QNAME = new QName("http://www.health_care.com/record", "record");
-    private final static QName _Appointment_QNAME = new QName("http://www.health_care.com/appointment", "appointment");
 
 
     /**
@@ -65,13 +62,6 @@ public class ObjectFactory {
         return new User();
     }
 
-    /**
-     * Create an instance of {@link Doctor }
-     * 
-     */
-    public Doctor createDoctor() {
-        return new Doctor();
-    }
 
     /**
      * Create an instance of {@link User.Name }
@@ -84,23 +74,6 @@ public class ObjectFactory {
     
     public Patient createPatient() {
         return new Patient();
-    }
- 
-    /**
-     * Create an instance of {@link Appointment }
-     * 
-     */
-    public Appointment createAppointment() {
-        return new Appointment();
-    }
-    
-    /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link Doctor }{@code >}}
-     * 
-     */
-    @XmlElementDecl(namespace = "http://www.health_care.com/doctor", name = "doctor")
-    public JAXBElement<Doctor> createDoctor(Doctor value) {
-        return new JAXBElement<Doctor>(_Doctor_QNAME, Doctor.class, null, value);
     }
 
     /**
@@ -115,16 +88,6 @@ public class ObjectFactory {
     @XmlElementDecl(namespace = "http://www.health_care.com/patient", name = "patient")
     public JAXBElement<Patient> createPatient(Patient value) {
         return new JAXBElement<Patient>(_Patient_QNAME, Patient.class, null, value);
-    }
-    
-    @XmlElementDecl(namespace = "http://www.health_care.com/record", name = "record")
-    public JAXBElement<Record> createRecord(Record value) {
-        return new JAXBElement<Record>(_Record_QNAME, Record.class, null, value);
-    }
-    
-    @XmlElementDecl(namespace = "http://www.health_care.com/appointment", name = "record")
-    public JAXBElement<Appointment> createAppointment(Appointment appointment) {
-        return new JAXBElement<Appointment>(_Appointment_QNAME, Appointment.class, null, appointment);
     }
 
 }

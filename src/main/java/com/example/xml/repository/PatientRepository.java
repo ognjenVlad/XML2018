@@ -20,7 +20,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Repository;
 
-import com.example.xml.model.Patient;
+import com.example.xml.model.patient.Patient;
 import com.example.xml.util.AuthenticationUtilities;
 import com.example.xml.util.ConnectUtil;
 import com.example.xml.util.DBData;
@@ -52,7 +52,7 @@ public class PatientRepository {
     	 String collectionId = "/db/health_care_system/pacients";
          String documentId = id.trim();
 		 DBData data = this.connectUtil.getReourceById( collectionId, documentId, AuthenticationUtilities.loadProperties());
-         JAXBContext context = JAXBContext.newInstance("com.example.xml.model");
+         JAXBContext context = JAXBContext.newInstance("com.example.xml.model.patient");
          Unmarshaller unmarshaller = context.createUnmarshaller();
          Patient pacient = (Patient) JAXBIntrospector.getValue(unmarshaller.unmarshal(data.getResource().getContentAsDOM()));
          return pacient;
@@ -73,8 +73,9 @@ public class PatientRepository {
         while(i.hasMoreResources()) {
             try {
                 next = i.nextResource();
-                JAXBContext context = JAXBContext.newInstance("com.example.xml.model");
+                JAXBContext context = JAXBContext.newInstance("com.example.xml.model.patient");
                 Unmarshaller unmarshaller = context.createUnmarshaller();
+                System.out.println(((XMLResource)next).getContentAsDOM());
                 user = (Patient) unmarshaller.unmarshal(((XMLResource)next).getContentAsDOM());
             } finally {
                 try {
@@ -101,7 +102,7 @@ public class PatientRepository {
         try {
 	        col = ConnectUtil.getOrCreateCollection(collectionId, 0, AuthenticationUtilities.loadProperties());
 	        res = (XMLResource) col.createResource(documentId, XMLResource.RESOURCE_TYPE);
-	        JAXBContext context = JAXBContext.newInstance("com.example.xml.model");
+	        JAXBContext context = JAXBContext.newInstance("com.example.xml.model.patient");
 	        Marshaller marshaller = context.createMarshaller();
 	        marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
 	        String path = new ClassPathResource("schema/patient.xsd").getFile().getPath();
@@ -145,7 +146,7 @@ public class PatientRepository {
         while(i.hasMoreResources()) {
             try {
                 next = i.nextResource();
-                JAXBContext context = JAXBContext.newInstance("com.example.xml.model");
+                JAXBContext context = JAXBContext.newInstance("com.example.xml.model.patient");
                 Unmarshaller unmarshaller = context.createUnmarshaller();
                 user = (Patient) unmarshaller.unmarshal(((XMLResource)next).getContentAsDOM());
                 patients.add(user);

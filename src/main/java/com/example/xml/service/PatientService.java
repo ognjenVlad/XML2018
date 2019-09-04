@@ -6,9 +6,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.xml.dtos.RegisterDTO;
-import com.example.xml.model.Patient;
-import com.example.xml.model.User;
+import com.example.xml.model.patient.Patient;
+import com.example.xml.model.record.Record;
+import com.example.xml.model.user.User;
 import com.example.xml.repository.PatientRepository;
+import com.example.xml.repository.RecordRepository;
 import com.example.xml.util.Roles;
 
 @Service
@@ -16,6 +18,9 @@ public class PatientService  {
 	public final static String userId = "http://www.health_care.com/user/";
 	@Autowired
 	PatientRepository patientRepository;
+	
+	@Autowired
+	RecordRepository recordRepository;
 
 	public void save(Patient pacient) {
 		try {
@@ -52,7 +57,25 @@ public class PatientService  {
 		}
 	}
 	
-	public Patient mapDtoToUser(RegisterDTO dto) {
+	public List<Record> simpleSearchRecord(String text) {
+		try {
+			return recordRepository.simpleSearch(text);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
+	public List<String> advancedSearchRecord(String criteria, String text) {
+		try {
+			return recordRepository.advancedSearch(criteria, text);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
+	public com.example.xml.model.patient.Patient mapDtoToUser(RegisterDTO dto) {
 		Patient user = new Patient();
 		User.Name name = new User.Name();
 		name.setValue(dto.getName());

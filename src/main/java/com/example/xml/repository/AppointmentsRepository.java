@@ -24,7 +24,7 @@ import org.xmldb.api.modules.XPathQueryService;
 
 import com.example.xml.model.Appointment;
 import com.example.xml.model.Doctor;
-import com.example.xml.model.Patient;
+import com.example.xml.model.patient.Patient;
 import com.example.xml.util.AuthenticationUtilities;
 import com.example.xml.util.ConnectUtil;
 

@@ -29,6 +29,14 @@ export class PatientsService {
     return this.http.get(`http://localhost:8080/record` + `?id=${user.lbo}`);
   }
 
+  simpleSearch(user) {
+    return this.http.get(`http://localhost:8080/patients/search` + `?term=${user.lbo}`);
+  }
+
+  advancedSearch(user) {
+    return this.http.get(`http://localhost:8080/patients/search` + `?term=${user.lbo}`);
+  }
+
   getDoctorsAppointments(doctorId: string) {
     return this.http.get(`http://localhost:8080/appointments/doctor` + `?id=${doctorId}`).pipe(map((items: Array<Appointment>)=>{
       let usedAppointments = {}; 
@@ -44,6 +52,10 @@ export class PatientsService {
     }));
   }
 
+  allAppointmentsForDoctor(doctorId: string) {
+    return this.http.get(`http://localhost:8080/appointments/doctor` + `?id=${doctorId}`);
+  }
+
   getAvailableAppointments(items) {
     let appointments = [...availableAppointments];
     items.forEach((item) => {
@@ -57,10 +69,16 @@ export class PatientsService {
 
   saveAppointment(appointment: Appointment) {
     return this.http.post(`http://localhost:8080/appointments/create`, appointment).toPromise().then
-    (() => {
-      alert("Appointment created!")
-      this.router.navigate(['home']);
-  }).catch((error) => {
-  }) ;;
+      (() => {
+        alert("Appointment created!")
+        this.router.navigate(['home']);
+      }).catch((error) => {});
+  }
+
+  changeAppointment(appointment: Appointment) {
+    return this.http.post(`http://localhost:8080/appointments/create`, appointment).toPromise().then
+      (() => {
+        alert("Appointment changed!")
+    }).catch((error) => {});
   }
 }

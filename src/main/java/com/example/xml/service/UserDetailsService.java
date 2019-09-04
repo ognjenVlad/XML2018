@@ -12,7 +12,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import com.example.xml.model.User;
+import com.example.xml.model.user.User;
 
 @Service
 public class UserDetailsService implements org.springframework.security.core.userdetails.UserDetailsService {
@@ -20,11 +20,19 @@ public class UserDetailsService implements org.springframework.security.core.use
 	@Autowired
 	PatientService patientService;
 	
+	@Autowired
+	TechnicianService technicianService;
+	
 	@Override
     @Transactional
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		User u = this.patientService.findByUsername(username);
-		System.out.println(u.getJmbg());
+		System.out.println("user::::::::"+u);
+		if (u == null) {
+			u = this.technicianService.findByUsername(username);
+			System.out.println("user::::::::"+u.getUsername());
+		}
+		
 		if (u == null) {
             throw new UsernameNotFoundException(String.format("There is no account with username '%s'.", username));
         } else {

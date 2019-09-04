@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.xml.dtos.DoctorDTO;
 import com.example.xml.dtos.RegisterDTO;
 import com.example.xml.model.Doctor;
-import com.example.xml.model.User;
+import com.example.xml.model.user.User;
 import com.example.xml.service.DoctorServiceImpl;
 
 @RestController

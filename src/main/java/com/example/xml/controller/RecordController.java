@@ -12,11 +12,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.xml.dtos.RecordDTO;
 import com.example.xml.dtos.RegisterDTO;
-import com.example.xml.model.Patient;
-import com.example.xml.model.Record;
-import com.example.xml.model.User;
+import com.example.xml.model.patient.Patient;
+import com.example.xml.model.user.User;
 import com.example.xml.service.PatientService;
 import com.example.xml.service.RecordService;
+import com.example.xml.model.record.Record;
 
 @RestController
 @RequestMapping(value = "record")

@@ -36,8 +36,8 @@ import org.xmldb.api.base.XMLDBException;
 import org.xmldb.api.modules.XMLResource;
 import org.xmldb.api.modules.XPathQueryService;
 
-import com.example.xml.model.Patient;
-import com.example.xml.model.Record;
+import com.example.xml.model.patient.Patient;
+import com.example.xml.model.record.Record;
 import com.example.xml.util.AuthenticationUtilities;
 import com.example.xml.util.ConnectUtil;
 import com.example.xml.util.DBData;
@@ -53,7 +53,7 @@ public class RecordRepository {
 	@Autowired
     private ConnectUtil connectUtil;
 	
-	public Record findByPatientLbo(String lbo) throws  Exception{
+	public com.example.xml.model.record.Record findByPatientLbo(String lbo) throws  Exception{
     	Database database = this.connectUtil.connectToDatabase(AuthenticationUtilities.loadProperties());
         DatabaseManager.registerDatabase(database);
     	String collectionId = "/db/health_care_system/records";
@@ -68,7 +68,7 @@ public class RecordRepository {
         while(i.hasMoreResources()) {
             try {
                 next = i.nextResource();
-                JAXBContext context = JAXBContext.newInstance("com.example.xml.model");
+                JAXBContext context = JAXBContext.newInstance("com.example.xml.model.record");
                 Unmarshaller unmarshaller = context.createUnmarshaller();
                 record = (Record) unmarshaller.unmarshal(((XMLResource)next).getContentAsDOM());
             } finally {
@@ -87,7 +87,7 @@ public class RecordRepository {
    	 String collectionId = "/db/health_care_system/records";
         String documentId = id.trim();
 		DBData data = this.connectUtil.getReourceById( collectionId, documentId, AuthenticationUtilities.loadProperties());
-        JAXBContext context = JAXBContext.newInstance("com.example.xml.model");
+        JAXBContext context = JAXBContext.newInstance("com.example.xml.model.record");
         Unmarshaller unmarshaller = context.createUnmarshaller();
         Record record = (Record) JAXBIntrospector.getValue(unmarshaller.unmarshal(data.getResource().getContentAsDOM()));
         return record;
@@ -104,7 +104,7 @@ public class RecordRepository {
         try {
 	        col = ConnectUtil.getOrCreateCollection(collectionId, 0, AuthenticationUtilities.loadProperties());
 	        res = (XMLResource) col.createResource(documentId, XMLResource.RESOURCE_TYPE);
-	        JAXBContext context = JAXBContext.newInstance("com.example.xml.model");
+	        JAXBContext context = JAXBContext.newInstance("com.example.xml.model.record");
 	        Marshaller marshaller = context.createMarshaller();
 	        marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
 	        String path = new ClassPathResource("schema/record.xsd").getFile().getPath();
@@ -157,7 +157,6 @@ public class RecordRepository {
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         metadataExtractor.extractMetadata(in, out);
 
-        // Loading a default model with extracted metadata
         Model model = ModelFactory.createDefaultModel();
         model.read(new ByteArrayInputStream(out.toByteArray()), "RDF");
         out = new ByteArrayOutputStream();
@@ -167,10 +166,8 @@ public class RecordRepository {
         model.write(System.out, SparqlUtil.RDF_XML);
         model.write(System.out, SparqlUtil.NTRIPLES);
         model.write(out, SparqlUtil.NTRIPLES);
-        // Writing the named graph
         String sparqlUpdate = SparqlUtil.insertData(connect.dataEndpoint + SPARQL_NAMED_GRAPH_URI, new String(out.toByteArray()));
 
-        // UpdateRequest represents a unit of execution
         UpdateRequest update = UpdateFactory.create(sparqlUpdate);
 
         UpdateProcessor processor = UpdateExecutionFactory.createRemote(update, connect.updateEndpoint);
@@ -185,7 +182,8 @@ public class RecordRepository {
         UpdateProcessor processor = UpdateExecutionFactory.createRemote(update, connect.updateEndpoint);
         processor.execute();
     }
-	public List<String> searchKartonMetadata(String criteria, String object) throws Exception{
+
+	public List<String> advancedSearch(String criteria, String object) throws Exception{
         String pred = "";
         if(criteria.equals("lbo"))
         	pred = "<" + HEALTH_CARE_RDF_URI + "lbo>";

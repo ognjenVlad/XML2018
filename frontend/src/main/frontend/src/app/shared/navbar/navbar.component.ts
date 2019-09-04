@@ -24,4 +24,7 @@ export class NavbarComponent implements OnInit {
     return this.jwtService.hasRole(Roles.PATIENT);
   }
 
+  isTechnician() {
+    return this.jwtService.hasRole(Roles.TECHNICIAN);
+  }
 }

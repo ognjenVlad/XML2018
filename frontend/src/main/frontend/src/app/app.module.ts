@@ -18,8 +18,14 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule, MAT_DATE_LOCALE, DateAdapter, MAT_DATE_FORMATS } from '@angular/material/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material';
+import { MatInputModule, MatDialogModule } from '@angular/material';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import { SearchComponent } from './components/search/search.component';
+import { AppointmentChangeComponent } from './components/appointment-change/appointment-change.component';
+import { TechnicianGuard } from './shared/guards/technician.guard';
+import { PatientGuard } from './shared/guards/patient.guard';
+import { AppointmentChangeModalComponent } from './components/appointment-change-modal/appointment-change-modal.component';
+import {MatCheckboxModule} from '@angular/material/checkbox';
 
 @NgModule({
   declarations: [
@@ -29,7 +35,10 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
     HomeComponent,
     NavbarComponent,
     ChooseDoctorComponent,
-    AppointmentsComponent
+    AppointmentsComponent,
+    SearchComponent,
+    AppointmentChangeComponent,
+    AppointmentChangeModalComponent
   ],
   imports: [
     BrowserModule,
@@ -42,10 +51,13 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
     MatNativeDateModule,
     MatFormFieldModule,
     MatInputModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    MatDialogModule,
+    MatCheckboxModule
   ],
   exports: [MatDatepickerModule],
-  providers: [JwtService, AnonymousGuard, AuthGuard],
+  providers: [JwtService, AnonymousGuard, AuthGuard, TechnicianGuard, PatientGuard],
+  entryComponents: [AppointmentChangeModalComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

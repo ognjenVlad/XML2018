@@ -2,9 +2,9 @@ package com.example.xml.repository;
 
 import java.io.ByteArrayOutputStream;
 import java.io.OutputStream;
-import java.util.ArrayList;
 
 import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBIntrospector;
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
 
@@ -22,67 +22,50 @@ import org.xmldb.api.base.XMLDBException;
 import org.xmldb.api.modules.XMLResource;
 import org.xmldb.api.modules.XPathQueryService;
 
-import com.example.xml.model.Doctor;
 import com.example.xml.model.patient.Patient;
+import com.example.xml.model.user.User;
 import com.example.xml.util.AuthenticationUtilities;
 import com.example.xml.util.ConnectUtil;
+import com.example.xml.util.DBData;
 
 @Repository
-public class DoctorRepository {
+public class TechnicianRepository {
 	@Autowired
     private ConnectUtil connectUtil;
 	
-	public ArrayList<Doctor> getAll() throws  Exception{		
-		Database database = this.connectUtil.connectToDatabase(AuthenticationUtilities.loadProperties());
-		DatabaseManager.registerDatabase(database);
-		String collectionId = "/db/health_care_system/doctors";
-		Collection col = ConnectUtil.getOrCreateCollection( collectionId, 0, AuthenticationUtilities.loadProperties());
-		XPathQueryService xpathService = (XPathQueryService) col.getService("XPathQueryService", "1.0");
-        xpathService.setProperty("indent", "yes");
-        String xpathExp = "//doctor/*/..";
-		ResourceSet result = xpathService.query(xpathExp);
-        ResourceIterator i = result.getIterator();
-        Resource next = null;
-        ArrayList<Doctor> doctors = new ArrayList<Doctor>();
-        while(i.hasMoreResources()) {
-            try {
-                next = i.nextResource();
-                System.out.println(((XMLResource)next).getContentAsDOM());
-                JAXBContext context = JAXBContext.newInstance("com.example.xml.model");
-                Unmarshaller unmarshaller = context.createUnmarshaller();
-                Doctor d = (Doctor) unmarshaller.unmarshal(((XMLResource)next).getContentAsDOM());
-                d.setPassword("");
-                doctors.add(d);
-            } finally {
-                try {
-                    ((EXistResource)next).freeResources();
-                } catch (XMLDBException xe) {
-                    xe.printStackTrace();
-                }
-            }
-            
-        }
-        return doctors;
-	}
-   
-	public Doctor findById(String id) throws  Exception{
+	private static AuthenticationUtilities.ConnectionProperties conn;
+	
+	
+    public User findPacientById(String id) throws  Exception{
+    	 String collectionId = "/db/health_care_system/technicians";
+         String documentId = id.trim();
+		 DBData data = this.connectUtil.getReourceById( collectionId, documentId, AuthenticationUtilities.loadProperties());
+         JAXBContext context = JAXBContext.newInstance("com.example.xml.model.user");
+         Unmarshaller unmarshaller = context.createUnmarshaller();
+         User technician = (User) JAXBIntrospector.getValue(unmarshaller.unmarshal(data.getResource().getContentAsDOM()));
+         return technician;
+    }
+    
+    public User findByUsername(String username) throws  Exception{
+    	System.out.println("username" + username);
     	Database database = this.connectUtil.connectToDatabase(AuthenticationUtilities.loadProperties());
         DatabaseManager.registerDatabase(database);
-    	String collectionId = "/db/health_care_system/doctors";
+    	String collectionId = "/db/health_care_system/technicians";
     	Collection col = ConnectUtil.getOrCreateCollection( collectionId, 0, AuthenticationUtilities.loadProperties());
         XPathQueryService xpathService = (XPathQueryService) col.getService("XPathQueryService", "1.0");
         xpathService.setProperty("indent", "yes");
-        String xpathExp = "//doctor/*[contains(local-name(),'jmbg')][.=\"" + id + "\"]/..";
+        String xpathExp = "//user/*[contains(local-name(),'username')][.=\"" + username + "\"]/..";
 		ResourceSet result = xpathService.query(xpathExp);
         ResourceIterator i = result.getIterator();
         Resource next = null;
-        Doctor user = null;
+        User user = null;
         while(i.hasMoreResources()) {
             try {
                 next = i.nextResource();
-                JAXBContext context = JAXBContext.newInstance("com.example.xml.model");
+                JAXBContext context = JAXBContext.newInstance("com.example.xml.model.user");
                 Unmarshaller unmarshaller = context.createUnmarshaller();
-                user = (Doctor) unmarshaller.unmarshal(((XMLResource)next).getContentAsDOM());
+                System.out.println(((XMLResource)next).getContentAsDOM());
+                user = (User) unmarshaller.unmarshal(((XMLResource)next).getContentAsDOM());
             } finally {
                 try {
                     ((EXistResource)next).freeResources();
@@ -94,24 +77,26 @@ public class DoctorRepository {
         }
         return user;
     }
-	
-	public XMLResource save(Doctor doctor) throws  Exception{
+    
+    
+    
+    public XMLResource save(User user) throws  Exception{
     	Database database = this.connectUtil.connectToDatabase(AuthenticationUtilities.loadProperties());
         DatabaseManager.registerDatabase(database);
-        String collectionId = "/db/health_care_system/doctors";
-        String documentId = doctor.getJmbg();
+        String collectionId = "/db/health_care_system/technicians";
+        String documentId = user.getJmbg();
         Collection col = null;
         XMLResource res = null;
         OutputStream os = new ByteArrayOutputStream();
         try {
 	        col = ConnectUtil.getOrCreateCollection(collectionId, 0, AuthenticationUtilities.loadProperties());
 	        res = (XMLResource) col.createResource(documentId, XMLResource.RESOURCE_TYPE);
-	        JAXBContext context = JAXBContext.newInstance("com.example.xml.model");
+	        JAXBContext context = JAXBContext.newInstance("com.example.xml.model.user");
 	        Marshaller marshaller = context.createMarshaller();
 	        marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
-	        String path = new ClassPathResource("schema/doctor.xsd").getFile().getPath();
+	        String path = new ClassPathResource("schema/user.xsd").getFile().getPath();
 	        marshaller.setProperty(Marshaller.JAXB_SCHEMA_LOCATION, path);
-	        marshaller.marshal(doctor, os);
+	        marshaller.marshal(user, os);
 	        res.setContent(os);
 	        col.storeResource(res);
         return res;
@@ -133,5 +118,4 @@ public class DoctorRepository {
 	        }
         }
     }
-	
 }
