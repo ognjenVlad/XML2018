@@ -26,6 +26,7 @@ import { TechnicianGuard } from './shared/guards/technician.guard';
 import { PatientGuard } from './shared/guards/patient.guard';
 import { AppointmentChangeModalComponent } from './components/appointment-change-modal/appointment-change-modal.component';
 import {MatCheckboxModule} from '@angular/material/checkbox';
+import { GeneratePdfComponent } from './components/generate-pdf/generate-pdf.component';
 
 @NgModule({
   declarations: [
@@ -38,7 +39,8 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
     AppointmentsComponent,
     SearchComponent,
     AppointmentChangeComponent,
-    AppointmentChangeModalComponent
+    AppointmentChangeModalComponent,
+    GeneratePdfComponent
   ],
   imports: [
     BrowserModule,

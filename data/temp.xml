@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<record:record xmlns:record="http://www.health_care.com/record" xmlns="http://www.w3.org/ns/rdfa#" xmlns:xs="http://www.w3.org/2001/XMLSchema#" xmlns:hs="http://www.health_care.com/rdf/hs/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="http://www.health_care.com/record/1212121212121" xsi:schemaLocation="/Users/ognjen/Desktop/XML2018/target/classes/schema/record.xsd">
+    <record:patient_lbo>1212121212121</record:patient_lbo>
+    <record:doctor_id>1234512345123</record:doctor_id>
+</record:record>

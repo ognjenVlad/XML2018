@@ -1,5 +1,6 @@
 package com.example.xml.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.xml.model.Doctor;
 import com.example.xml.model.patient.Patient;
 import com.example.xml.model.record.Record;
 import com.example.xml.model.user.User;
@@ -38,6 +40,15 @@ public class PatientController {
         User u = patientService.findByUsername(username);
 
         return new ResponseEntity<User>(u, HttpStatus.OK);
+    }
+	
+	@RequestMapping(value = "/all-patients",
+            produces = MediaType.APPLICATION_JSON_VALUE,
+			method = RequestMethod.GET)
+    public ResponseEntity<ArrayList<Patient>> getAllDoctors() throws Exception{
+		ArrayList<Patient> patients = this.patientService.getAll();
+
+        return new ResponseEntity<ArrayList<Patient>>(patients, HttpStatus.OK);
     }
 	
 	@RequestMapping(value = "/search",

@@ -81,4 +81,9 @@ export class PatientsService {
         alert("Appointment changed!")
     }).catch((error) => {});
   }
+
+  getAllPatients() {
+    return this.http.get(`http://localhost:8080/patient/all-patients`);
+  }
+
 }

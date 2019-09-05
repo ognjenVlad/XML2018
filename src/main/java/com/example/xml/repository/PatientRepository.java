@@ -20,6 +20,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Repository;
 
+import com.example.xml.model.Doctor;
 import com.example.xml.model.patient.Patient;
 import com.example.xml.util.AuthenticationUtilities;
 import com.example.xml.util.ConnectUtil;
@@ -57,6 +58,39 @@ public class PatientRepository {
          Patient pacient = (Patient) JAXBIntrospector.getValue(unmarshaller.unmarshal(data.getResource().getContentAsDOM()));
          return pacient;
     }
+    
+    public ArrayList<Patient> getAll() throws  Exception{		
+		Database database = this.connectUtil.connectToDatabase(AuthenticationUtilities.loadProperties());
+		DatabaseManager.registerDatabase(database);
+		String collectionId = "/db/health_care_system/pacients";
+		Collection col = ConnectUtil.getOrCreateCollection( collectionId, 0, AuthenticationUtilities.loadProperties());
+		XPathQueryService xpathService = (XPathQueryService) col.getService("XPathQueryService", "1.0");
+        xpathService.setProperty("indent", "yes");
+        String xpathExp = "//patient/*/..";
+		ResourceSet result = xpathService.query(xpathExp);
+        ResourceIterator i = result.getIterator();
+        Resource next = null;
+        ArrayList<Patient> patients = new ArrayList<Patient>();
+        while(i.hasMoreResources()) {
+            try {
+                next = i.nextResource();
+                System.out.println(((XMLResource)next).getContentAsDOM());
+                JAXBContext context = JAXBContext.newInstance("com.example.xml.model.patient");
+                Unmarshaller unmarshaller = context.createUnmarshaller();
+                Patient d = (Patient) unmarshaller.unmarshal(((XMLResource)next).getContentAsDOM());
+                d.setPassword("");
+                patients.add(d);
+            } finally {
+                try {
+                    ((EXistResource)next).freeResources();
+                } catch (XMLDBException xe) {
+                    xe.printStackTrace();
+                }
+            }
+            
+        }
+        return patients;
+	}
     
     public Patient findByUsername(String username) throws  Exception{
     	Database database = this.connectUtil.connectToDatabase(AuthenticationUtilities.loadProperties());

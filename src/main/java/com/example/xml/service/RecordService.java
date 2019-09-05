@@ -1,6 +1,11 @@
 package com.example.xml.service;
 
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
+import org.w3c.dom.Node;
 import com.example.xml.model.record.Record;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +28,14 @@ public class RecordService {
 		}
 	}
 	
+	public void saveRecordToFile(Record record) {
+		try {
+			recordRepository.saveRecordToFile(record);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
 	public Record findById(String id) {
 		try {
 			return recordRepository.findRecordById(id);
@@ -32,7 +45,7 @@ public class RecordService {
 		}
 	}
 	
-	public Record findByUsername(String lbo) {
+	public Record findByPatientLbo(String lbo) {
 		try {
 			return recordRepository.findByPatientLbo(lbo);
 		} catch (Exception e) {

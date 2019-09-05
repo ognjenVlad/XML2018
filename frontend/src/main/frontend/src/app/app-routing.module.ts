@@ -10,6 +10,7 @@ import { AppointmentsComponent } from './components/appointments/appointments.co
 import { TechnicianGuard } from './shared/guards/technician.guard';
 import { AppointmentChangeComponent } from './components/appointment-change/appointment-change.component';
 import { PatientGuard } from './shared/guards/patient.guard';
+import { GeneratePdfComponent } from './components/generate-pdf/generate-pdf.component';
 
 
 const routes: Routes = [
@@ -20,6 +21,7 @@ const routes: Routes = [
   { path: 'register', component: RegisterComponent , canActivate: [AnonymousGuard]},
   { path: 'make-appointment', component: AppointmentsComponent, canActivate: [PatientGuard]},
   { path: 'appointment-change', component: AppointmentChangeComponent, canActivate: [TechnicianGuard]},
+  { path: 'documentation', component: GeneratePdfComponent, canActivate: [TechnicianGuard]},
 ];
 @NgModule({
   imports: [RouterModule.forRoot(routes)],

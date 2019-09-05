@@ -2,6 +2,7 @@ package com.example.xml.repository;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.nio.charset.StandardCharsets;
@@ -11,10 +12,12 @@ import java.util.List;
 
 import org.springframework.util.SerializationUtils;
 import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBException;
 import javax.xml.bind.JAXBIntrospector;
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
 import org.w3c.dom.Element;
+import org.w3c.dom.Node;
 import org.apache.jena.query.QueryExecutionFactory;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.ModelFactory;
@@ -50,6 +53,7 @@ public class RecordRepository {
 
 	private static final String SPARQL_NAMED_GRAPH_URI = "/health_system/sparql/metadata";
 	private static final String HEALTH_CARE_RDF_URI = "http://www.health_care.com/rdf/hs/";
+	private static final String TARGET_NAMESPACE = "http://www.health_care.com/record";
 	@Autowired
     private ConnectUtil connectUtil;
 	
@@ -60,6 +64,7 @@ public class RecordRepository {
     	Collection col = ConnectUtil.getOrCreateCollection( collectionId, 0, AuthenticationUtilities.loadProperties());
         XPathQueryService xpathService = (XPathQueryService) col.getService("XPathQueryService", "1.0");
         xpathService.setProperty("indent", "yes");
+        xpathService.setNamespace("", TARGET_NAMESPACE);
         String xpathExp = "//record/*[contains(local-name(),'patient_lbo')][.=\"" + lbo + "\"]/..";
 		ResourceSet result = xpathService.query(xpathExp);
         ResourceIterator i = result.getIterator();
@@ -93,6 +98,7 @@ public class RecordRepository {
         return record;
    }
 	
+	
 	public XMLResource save(Record record) throws  Exception{
     	Database database = this.connectUtil.connectToDatabase(AuthenticationUtilities.loadProperties());
         DatabaseManager.registerDatabase(database);
@@ -112,6 +118,8 @@ public class RecordRepository {
 	        marshaller.marshal(record, os);
 	        deleteMetada(record.getId());
 	        res.setContent(os);
+	        col.storeResource(res);
+
 	        System.out.println("[INFO] Storing the document: " + res.getId());
 	        org.w3c.dom.Node n = res.getContentAsDOM().getFirstChild();
             ((Element)n).setAttribute("vocab", "http://www.health_care.com/rdf/hs/");
@@ -126,9 +134,8 @@ public class RecordRepository {
                 }
             }
             res.setContentAsDOM(n.getParentNode());
-	        col.storeResource(res);
 	        System.out.println(res.getContent().toString());
-	        addMetadata(res.getContent().toString());
+	        addMetadata(org.apache.commons.lang3.SerializationUtils.clone(res.getContent().toString()));
         return res;
         
         } finally {
@@ -146,6 +153,21 @@ public class RecordRepository {
 	                xe.printStackTrace();
 	            }
 	        }
+        }
+    }
+	
+	public void saveRecordToFile(Record record) throws  Exception{
+        try {
+        	File file = new File("data/temp.xml");
+	        JAXBContext context = JAXBContext.newInstance("com.example.xml.model.record");
+	        Marshaller marshaller = context.createMarshaller();
+	        marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
+	        String path = new ClassPathResource("schema/record.xsd").getFile().getPath();
+	        marshaller.setProperty(Marshaller.JAXB_SCHEMA_LOCATION, path);
+	        marshaller.marshal(record, file);
+	        marshaller.marshal(record, System.out);
+        } catch (JAXBException e) {
+            e.printStackTrace();
         }
     }
 	
@@ -228,7 +250,7 @@ public class RecordRepository {
     	Collection col = ConnectUtil.getOrCreateCollection( collectionId, 0, AuthenticationUtilities.loadProperties());
         XPathQueryService xpathService = (XPathQueryService) col.getService("XPathQueryService", "1.0");
         xpathService.setProperty("indent", "yes");
-        String xpathExp = "/record//*[contains(text(),\"" + content + "\")]/..";
+        String xpathExp = "/record:record//*[contains(text(),\"" + content + "\")]/..";
 		ResourceSet result = xpathService.query(xpathExp);
         ResourceIterator i = result.getIterator();
         Resource next = null;

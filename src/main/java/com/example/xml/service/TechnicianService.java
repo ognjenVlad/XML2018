@@ -1,5 +1,9 @@
 package com.example.xml.service;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -7,10 +11,17 @@ import com.example.xml.dtos.RegisterDTO;
 import com.example.xml.model.patient.Patient;
 import com.example.xml.model.user.User;
 import com.example.xml.repository.TechnicianRepository;
+import com.example.xml.util.PDFTransformer;
 import com.example.xml.util.Roles;
+import com.itextpdf.text.DocumentException;
 
 @Service
 public class TechnicianService {
+	public static final String OUTPUT_FILE = "gen/output.pdf";
+
+	public static final String INPUT_FILE = "data/temp.xml";
+	public static final String XSL_FILE = "src/main/resources/xsl/record.xsl";
+	
 	public final static String userId = "http://www.health_care.com/technician/";
 	@Autowired
 	TechnicianRepository technicianRepository;
@@ -53,5 +64,28 @@ public class TechnicianService {
 		user.setUsername(dto.getUsername());
 		user.setId(userId + dto.getJmbg());
 		return user;
+	}
+	
+	public File generatePdf() throws IOException, DocumentException {
+
+    	System.out.println("[INFO] " + PDFTransformer.class.getSimpleName());
+    	
+    	File pdfFile = new File(OUTPUT_FILE);
+    	
+		if (!pdfFile.getParentFile().exists()) {
+			System.out.println("[INFO] A new directory is created: " + pdfFile.getParentFile().getAbsolutePath() + ".");
+			pdfFile.getParentFile().mkdir();
+		}
+    	
+		PDFTransformer pdfTransformer = new PDFTransformer();
+		
+		pdfTransformer.generateHTML(INPUT_FILE, XSL_FILE);
+		pdfTransformer.generatePDF(OUTPUT_FILE);
+		
+		System.out.println("[INFO] File \"" + OUTPUT_FILE + "\" generated successfully.");
+		System.out.println("[INFO] End.");
+		
+		return pdfFile;
+    
 	}
 }

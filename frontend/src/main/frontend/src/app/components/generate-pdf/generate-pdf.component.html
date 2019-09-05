@@ -1,0 +1,26 @@
+<table class="table table-hover table-dark">
+  <thead>
+  <tr>
+    <th>JMBG</th>
+    <th>Name</th>
+    <th>Lastname</th>
+    <th>LBO</th>
+    <th>Phone</th>
+    <th class="u-position--center">Generate pdf</th>
+  </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let item of patients">
+      <td>{{item.jmbg}}</td>
+      <td>{{item.name}}</td>
+      <td>{{item.lastname}}</td>
+      <td>{{item.lbo}}</td>
+      <td>{{item.phone}}</td>
+      <td md-button class="submit-btn" class="u-position--center">
+        <button class="btn btn-success"(click)="download(item)">
+          <i class="fa fa-download"></i>
+        </button>
+      </td>
+    </tr>
+  </tbody>
+</table>

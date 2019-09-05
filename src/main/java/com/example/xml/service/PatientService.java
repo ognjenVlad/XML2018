@@ -1,11 +1,13 @@
 package com.example.xml.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.xml.dtos.RegisterDTO;
+import com.example.xml.model.Doctor;
 import com.example.xml.model.patient.Patient;
 import com.example.xml.model.record.Record;
 import com.example.xml.model.user.User;
@@ -27,6 +29,15 @@ public class PatientService  {
 			patientRepository.save(pacient);
 		} catch (Exception e) {
 			e.printStackTrace();
+		}
+	}
+	
+	public ArrayList<Patient> getAll() {
+		try {
+			return patientRepository.getAll();
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
 		}
 	}
 	
