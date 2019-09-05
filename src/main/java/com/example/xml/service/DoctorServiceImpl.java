@@ -37,6 +37,15 @@ public class DoctorServiceImpl implements DoctorService {
 		}
 	}
 	
+	public Doctor findByUsername(String doctor) {
+		try {
+			return doctorRepository.findByUsername(doctor);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
 	public Doctor mapDtoToUser(DoctorDTO dto) {
 		Doctor user = new Doctor();
 		User.Name name = new User.Name();

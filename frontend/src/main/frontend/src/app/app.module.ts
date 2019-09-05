@@ -27,6 +27,9 @@ import { PatientGuard } from './shared/guards/patient.guard';
 import { AppointmentChangeModalComponent } from './components/appointment-change-modal/appointment-change-modal.component';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import { GeneratePdfComponent } from './components/generate-pdf/generate-pdf.component';
+import { RecordsComponent } from './components/records/records.component';
+import { PatientsComponent } from './components/patients/patients.component';
+import { DoctorGuard } from './shared/guards/doctor.guard';
 
 @NgModule({
   declarations: [
@@ -40,7 +43,9 @@ import { GeneratePdfComponent } from './components/generate-pdf/generate-pdf.com
     SearchComponent,
     AppointmentChangeComponent,
     AppointmentChangeModalComponent,
-    GeneratePdfComponent
+    GeneratePdfComponent,
+    RecordsComponent,
+    PatientsComponent
   ],
   imports: [
     BrowserModule,
@@ -58,7 +63,7 @@ import { GeneratePdfComponent } from './components/generate-pdf/generate-pdf.com
     MatCheckboxModule
   ],
   exports: [MatDatepickerModule],
-  providers: [JwtService, AnonymousGuard, AuthGuard, TechnicianGuard, PatientGuard],
+  providers: [JwtService, AnonymousGuard, AuthGuard, TechnicianGuard, PatientGuard, DoctorGuard],
   entryComponents: [AppointmentChangeModalComponent],
   bootstrap: [AppComponent]
 })

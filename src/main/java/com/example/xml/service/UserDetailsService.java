@@ -23,6 +23,9 @@ public class UserDetailsService implements org.springframework.security.core.use
 	@Autowired
 	TechnicianService technicianService;
 	
+	@Autowired
+	DoctorServiceImpl doctorService;
+	
 	@Override
     @Transactional
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -30,7 +33,10 @@ public class UserDetailsService implements org.springframework.security.core.use
 		System.out.println("user::::::::"+u);
 		if (u == null) {
 			u = this.technicianService.findByUsername(username);
-			System.out.println("user::::::::"+u.getUsername());
+		}
+		
+		if (u == null) {
+			u = this.doctorService.findByUsername(username);
 		}
 		
 		if (u == null) {

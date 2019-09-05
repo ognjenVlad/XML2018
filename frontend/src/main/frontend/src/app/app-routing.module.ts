@@ -11,6 +11,9 @@ import { TechnicianGuard } from './shared/guards/technician.guard';
 import { AppointmentChangeComponent } from './components/appointment-change/appointment-change.component';
 import { PatientGuard } from './shared/guards/patient.guard';
 import { GeneratePdfComponent } from './components/generate-pdf/generate-pdf.component';
+import { RecordsComponent } from './components/records/records.component';
+import { PatientsComponent } from './components/patients/patients.component';
+import { DoctorGuard } from './shared/guards/doctor.guard';
 
 
 const routes: Routes = [
@@ -22,6 +25,8 @@ const routes: Routes = [
   { path: 'make-appointment', component: AppointmentsComponent, canActivate: [PatientGuard]},
   { path: 'appointment-change', component: AppointmentChangeComponent, canActivate: [TechnicianGuard]},
   { path: 'documentation', component: GeneratePdfComponent, canActivate: [TechnicianGuard]},
+  { path: 'record', component: RecordsComponent, canActivate: [PatientGuard]},
+  { path: 'patients', component: PatientsComponent, canActivate: [DoctorGuard]},
 ];
 @NgModule({
   imports: [RouterModule.forRoot(routes)],

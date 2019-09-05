@@ -13,11 +13,17 @@
         <li *ngIf="isPatient()" class="nav-item">
           <a class="nav-link waves-effect waves-light" routerLinkActive="is-active" routerLink="make-appointment">Make an appointment</a>
         </li>
+        <li *ngIf="isPatient()" class="nav-item">
+          <a class="nav-link waves-effect waves-light" routerLinkActive="is-active" routerLink="record">Your record</a>
+        </li>
         <li *ngIf="isTechnician()" class="nav-item">
           <a class="nav-link waves-effect waves-light" routerLinkActive="is-active" routerLink="appointment-change">Appointments</a>
         </li>
         <li *ngIf="isTechnician()" class="nav-item">
           <a class="nav-link waves-effect waves-light" routerLinkActive="is-active" routerLink="documentation">Patients records</a>
+        </li>
+        <li *ngIf="isDoctor()" class="nav-item">
+          <a class="nav-link waves-effect waves-light" routerLinkActive="is-active" routerLink="patients">Patients</a>
         </li>
   
       </ul>

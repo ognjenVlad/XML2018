@@ -24,6 +24,7 @@ import org.xmldb.api.modules.XPathQueryService;
 
 import com.example.xml.model.Doctor;
 import com.example.xml.model.patient.Patient;
+import com.example.xml.model.user.User;
 import com.example.xml.util.AuthenticationUtilities;
 import com.example.xml.util.ConnectUtil;
 
@@ -132,6 +133,38 @@ public class DoctorRepository {
 	            }
 	        }
         }
+    }
+	
+	public Doctor findByUsername(String username) throws  Exception{
+    	System.out.println("username" + username);
+    	Database database = this.connectUtil.connectToDatabase(AuthenticationUtilities.loadProperties());
+        DatabaseManager.registerDatabase(database);
+    	String collectionId = "/db/health_care_system/doctors";
+    	Collection col = ConnectUtil.getOrCreateCollection( collectionId, 0, AuthenticationUtilities.loadProperties());
+        XPathQueryService xpathService = (XPathQueryService) col.getService("XPathQueryService", "1.0");
+        xpathService.setProperty("indent", "yes");
+        String xpathExp = "//doctor/*[contains(local-name(),'username')][.=\"" + username + "\"]/..";
+		ResourceSet result = xpathService.query(xpathExp);
+        ResourceIterator i = result.getIterator();
+        Resource next = null;
+        Doctor user = null;
+        while(i.hasMoreResources()) {
+            try {
+                next = i.nextResource();
+                JAXBContext context = JAXBContext.newInstance("com.example.xml.model");
+                Unmarshaller unmarshaller = context.createUnmarshaller();
+                System.out.println(((XMLResource)next).getContentAsDOM());
+                user = (Doctor) unmarshaller.unmarshal(((XMLResource)next).getContentAsDOM());
+            } finally {
+                try {
+                    ((EXistResource)next).freeResources();
+                } catch (XMLDBException xe) {
+                    xe.printStackTrace();
+                }
+            }
+            
+        }
+        return user;
     }
 	
 }
