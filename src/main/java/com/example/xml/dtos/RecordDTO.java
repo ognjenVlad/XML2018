@@ -7,23 +7,23 @@ import javax.validation.constraints.NotNull;
 public class RecordDTO implements Serializable {
 
     @NotNull
-    private String patientLbo;
+    private String patientJmbg;
     @NotNull
     private String doctorId;
     
     public RecordDTO() { }
 
-    public RecordDTO(String patientLbo, String doctorId) {
-        this.patientLbo = patientLbo;
+    public RecordDTO(String patientJmbg, String doctorId) {
+        this.patientJmbg = patientJmbg;
         this.doctorId = doctorId;
     }
 
-	public String getPatientLbo() {
-		return patientLbo;
+	public String getPatientJmbg() {
+		return patientJmbg;
 	}
 
-	public void setPatientLbo(String patientLbo) {
-		this.patientLbo = patientLbo;
+	public void setPatientJmbg(String patientJmbg) {
+		this.patientJmbg = patientJmbg;
 	}
 
 	public String getDoctorId() {

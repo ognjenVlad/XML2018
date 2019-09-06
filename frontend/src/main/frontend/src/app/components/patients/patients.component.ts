@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { PatientsService } from 'src/app/services/patients.service';
 import { Patient } from 'src/app/models/patient.model';
-import { MatDialog } from '@angular/material';
+import { MatDialog, MatDialogConfig } from '@angular/material';
+import { ChangePatientModalComponent } from '../change-patient-modal/change-patient-modal.component';
 
 @Component({
   selector: 'app-patients',
@@ -20,6 +21,19 @@ export class PatientsComponent implements OnInit {
   }
 
   ngOnInit() {
+  }
+
+  changePatient(item) {
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.autoFocus = true;
+    dialogConfig.data = {...item};
+    let dialogRef = this.dialog.open(ChangePatientModalComponent, dialogConfig);
+    dialogRef.componentInstance.onChange.subscribe((item) => {
+      console.log(item);
+      const index = this.patients.findIndex((appointment) => appointment.id === item.id);
+      this.patients[index] = item;
+    });
+    console.log(item);
   }
 
 }

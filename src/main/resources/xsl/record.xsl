@@ -11,12 +11,12 @@
 	        <table border="1">
 	            <tr bgcolor="#0377fc">
 	            	<th><b>Id</b></th>
-					<th><b>Patient lbo</b></th>
+					<th><b>Patient jmbg</b></th>
 					<th><b>Doctor id</b></th>
 	            </tr>
 	            <tr bgcolor="#5ca8ab">
 	            	<td><xsl:value-of select="record:record/@id"/></td>
-	            	<td><xsl:value-of select="record:record/record:patient_lbo"/></td>
+	            	<td><xsl:value-of select="record:record/record:patient_jmbg"/></td>
 	            	<td><xsl:value-of select="record:record/record:doctor_id"/></td>
 	            </tr>
 	        </table>

@@ -57,7 +57,7 @@ public class RecordRepository {
 	@Autowired
     private ConnectUtil connectUtil;
 	
-	public com.example.xml.model.record.Record findByPatientLbo(String lbo) throws  Exception{
+	public com.example.xml.model.record.Record findByPatientJmbg(String jmbg) throws  Exception{
     	Database database = this.connectUtil.connectToDatabase(AuthenticationUtilities.loadProperties());
         DatabaseManager.registerDatabase(database);
     	String collectionId = "/db/health_care_system/records";
@@ -65,7 +65,7 @@ public class RecordRepository {
         XPathQueryService xpathService = (XPathQueryService) col.getService("XPathQueryService", "1.0");
         xpathService.setProperty("indent", "yes");
         xpathService.setNamespace("", TARGET_NAMESPACE);
-        String xpathExp = "//record/*[contains(local-name(),'patient_lbo')][.=\"" + lbo + "\"]/..";
+        String xpathExp = "//record/*[contains(local-name(),'patient_jmbg')][.=\"" + jmbg + "\"]/..";
 		ResourceSet result = xpathService.query(xpathExp);
         ResourceIterator i = result.getIterator();
         Resource next = null;
@@ -103,7 +103,7 @@ public class RecordRepository {
     	Database database = this.connectUtil.connectToDatabase(AuthenticationUtilities.loadProperties());
         DatabaseManager.registerDatabase(database);
         String collectionId = "/db/health_care_system/records";
-        String documentId = record.getPatientLbo();
+        String documentId = record.getPatientJmbg();
         Collection col = null;
         XMLResource res = null;
         OutputStream os = new ByteArrayOutputStream();
@@ -125,8 +125,8 @@ public class RecordRepository {
             ((Element)n).setAttribute("vocab", "http://www.health_care.com/rdf/hs/");
             ((Element)n).setAttribute("about", record.getId());
             for(int i = 0; i < n.getChildNodes().getLength(); i++){
-                if(n.getChildNodes().item(i).getNodeName().contains("patient_lbo")){
-                    ((org.w3c.dom.Element)n.getChildNodes().item(i)).setAttribute("property", "hs:lbo");
+                if(n.getChildNodes().item(i).getNodeName().contains("patient_jmbg")){
+                    ((org.w3c.dom.Element)n.getChildNodes().item(i)).setAttribute("property", "hs:jmbg");
                     ((org.w3c.dom.Element)n.getChildNodes().item(i)).setAttribute("datatype", "xs:string");
                 } else if(n.getChildNodes().item(i).getNodeName().contains("doctor_id")){
                     ((org.w3c.dom.Element)n.getChildNodes().item(i)).setAttribute("property", "hs:doctor");
@@ -207,8 +207,8 @@ public class RecordRepository {
 
 	public List<String> advancedSearch(String criteria, String object) throws Exception{
         String pred = "";
-        if(criteria.equals("lbo"))
-        	pred = "<" + HEALTH_CARE_RDF_URI + "lbo>";
+        if(criteria.equals("jmbg"))
+        	pred = "<" + HEALTH_CARE_RDF_URI + "jmbg>";
         else if(criteria.equals("doctor"))
             pred = "<" + HEALTH_CARE_RDF_URI + "doctor>";
 

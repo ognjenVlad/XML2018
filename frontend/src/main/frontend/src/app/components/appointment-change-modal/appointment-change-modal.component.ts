@@ -54,13 +54,14 @@ export class AppointmentChangeModalComponent implements OnInit {
   }
 
   changeAppointment() {
+    let newDate = this.form.controls.date.value;
     if (this.form.controls.date.value && !this.form.controls.appointment.value) {
       return;
     } else if (!this.form.controls.appointment.value && !this.form.controls.date.value) {
       this.form.controls.appointment.setValue(this.data.time);
-      this.form.controls.date.setValue(this.data.date);
+      newDate = this.data.date;
     }
-    const date = moment(this.form.controls.date.value).format(this.dateFormat);
+    const date = moment(newDate).format(this.dateFormat);
     console.log(this.form.controls.appointment.value);
     const newAppointment = {
       patientLbo: this.data.patientLbo, 

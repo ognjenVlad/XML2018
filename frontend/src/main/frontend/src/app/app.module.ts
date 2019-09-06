@@ -30,6 +30,7 @@ import { GeneratePdfComponent } from './components/generate-pdf/generate-pdf.com
 import { RecordsComponent } from './components/records/records.component';
 import { PatientsComponent } from './components/patients/patients.component';
 import { DoctorGuard } from './shared/guards/doctor.guard';
+import { ChangePatientModalComponent } from './components/change-patient-modal/change-patient-modal.component';
 
 @NgModule({
   declarations: [
@@ -45,7 +46,8 @@ import { DoctorGuard } from './shared/guards/doctor.guard';
     AppointmentChangeModalComponent,
     GeneratePdfComponent,
     RecordsComponent,
-    PatientsComponent
+    PatientsComponent,
+    ChangePatientModalComponent
   ],
   imports: [
     BrowserModule,
@@ -64,7 +66,7 @@ import { DoctorGuard } from './shared/guards/doctor.guard';
   ],
   exports: [MatDatepickerModule],
   providers: [JwtService, AnonymousGuard, AuthGuard, TechnicianGuard, PatientGuard, DoctorGuard],
-  entryComponents: [AppointmentChangeModalComponent],
+  entryComponents: [AppointmentChangeModalComponent, ChangePatientModalComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

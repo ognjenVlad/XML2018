@@ -61,8 +61,8 @@ public class RecordController {
 	public ResponseEntity<Resource> download(String id) throws IOException, DocumentException {
 		Patient p = this.patientService.findById(id);
 		System.out.println("LBO JE " + p.getLbo());
-		Record r = this.recordService.findByPatientLbo(p.getLbo());
-		System.out.println("AJ NADJI GA" + r.getPatientLbo());
+		Record r = this.recordService.findByPatientJmbg(p.getLbo());
+		System.out.println("AJ NADJI GA" + r.getPatientJmbg());
 		this.recordService.saveRecordToFile(r);
 		File file = this.technicianService.generatePdf();
 		System.out.println(file.getAbsolutePath());

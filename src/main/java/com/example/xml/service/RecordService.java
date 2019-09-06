@@ -45,9 +45,9 @@ public class RecordService {
 		}
 	}
 	
-	public Record findByPatientLbo(String lbo) {
+	public Record findByPatientJmbg(String jmbg) {
 		try {
-			return recordRepository.findByPatientLbo(lbo);
+			return recordRepository.findByPatientJmbg(jmbg);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
@@ -58,8 +58,8 @@ public class RecordService {
 		System.out.println(dto);
 		Record record = new Record();
 		record.setDoctorId(dto.getDoctorId());
-		record.setPatientLbo(dto.getPatientLbo());
-		record.setId(recordId + dto.getPatientLbo());
+		record.setPatientJmbg(dto.getPatientJmbg());
+		record.setId(recordId + dto.getPatientJmbg());
 		return record;
 	}
 	

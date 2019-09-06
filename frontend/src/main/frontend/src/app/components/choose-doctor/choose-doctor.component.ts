@@ -29,7 +29,7 @@ export class ChooseDoctorComponent implements OnInit {
   }
 
   selectDoctor(doc: Doctor) {
-    this.recordService.save({doctorId: doc.jmbg, patientLbo: this.patient.lbo, id: ''})
+    this.recordService.save({doctorId: doc.jmbg, patientJmbg: this.patient.jmbg, id: ''})
   }
 
 }

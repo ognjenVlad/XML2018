@@ -21,7 +21,7 @@ export class GeneratePdfComponent implements OnInit {
   }
 
   download(item) {
-    this.recordsService.download(item.lbo);
+    this.recordsService.download(item.jmbg);
   }
 
 }

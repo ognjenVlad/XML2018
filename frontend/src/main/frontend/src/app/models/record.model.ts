@@ -1,5 +1,5 @@
 export interface Record  {
-  patientLbo: string;
+  patientJmbg: string;
   doctorId: string;
   id: string;
 }

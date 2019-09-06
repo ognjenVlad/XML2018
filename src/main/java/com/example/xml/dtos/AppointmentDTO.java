@@ -3,7 +3,7 @@ package com.example.xml.dtos;
 import javax.xml.datatype.XMLGregorianCalendar;
 
 public class AppointmentDTO {
-	private String patientLbo;
+	private String patientJmbg;
     
     private String doctorId;
     
@@ -17,10 +17,10 @@ public class AppointmentDTO {
 
     public AppointmentDTO() {}
     
-	public AppointmentDTO(String patientLbo, String doctorId, String time, String date, String id,
+	public AppointmentDTO(String patientJmbg, String doctorId, String time, String date, String id,
 			Boolean isConfirmed) {
 		super();
-		this.patientLbo = patientLbo;
+		this.patientJmbg = patientJmbg;
 		this.doctorId = doctorId;
 		this.time = time;
 		this.id = id;
@@ -28,12 +28,12 @@ public class AppointmentDTO {
 		this.date = date;
 	}
 
-	public String getPatientLbo() {
-		return patientLbo;
+	public String getPatientJmbg() {
+		return patientJmbg;
 	}
 
-	public void setPatientLbo(String patientLbo) {
-		this.patientLbo = patientLbo;
+	public void setPatientJmbg(String patientJmbg) {
+		this.patientJmbg = patientJmbg;
 	}
 
 	public String getDoctorId() {

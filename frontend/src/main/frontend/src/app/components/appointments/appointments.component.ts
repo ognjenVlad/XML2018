@@ -61,7 +61,7 @@ export class AppointmentsComponent implements OnInit {
     console.log(this.form.controls.appointment.value);
     this.patientsService.saveAppointment(
       {
-        patientLbo: this.user.lbo, 
+        patientJmbg: this.user.jmbg, 
         doctorId: this.record.doctorId, 
         id: "", 
         date: date, 

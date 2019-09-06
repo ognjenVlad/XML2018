@@ -4,5 +4,5 @@ export interface Appointment {
   date: string;
   time: string;
   doctorId: string;
-  patientLbo: string;
+  patientJmbg: string;
 }

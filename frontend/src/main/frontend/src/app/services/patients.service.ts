@@ -26,15 +26,15 @@ export class PatientsService {
   }
 
   getPatientsRecord(user) {
-    return this.http.get(`http://localhost:8080/record` + `?id=${user.lbo}`);
+    return this.http.get(`http://localhost:8080/record` + `?id=${user.jmbg}`);
   }
 
   simpleSearch(user) {
-    return this.http.get(`http://localhost:8080/patients/search` + `?term=${user.lbo}`);
+    return this.http.get(`http://localhost:8080/patients/search` + `?term=${user.jmbg}`);
   }
 
   advancedSearch(user) {
-    return this.http.get(`http://localhost:8080/patients/search` + `?term=${user.lbo}`);
+    return this.http.get(`http://localhost:8080/patients/search` + `?term=${user.jmbg}`);
   }
 
   getDoctorsAppointments(doctorId: string) {

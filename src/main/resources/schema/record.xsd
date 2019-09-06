@@ -6,15 +6,15 @@
            xmlns:hs="http://www.health_care.com/rdf/hs/"
            targetNamespace="http://www.health_care.com/record"
            xmlns:record="http://www.health_care.com/record">
-   	<xs:simpleType name="lbo">
+   	<xs:simpleType name="jmbg">
         <xs:restriction base="xs:string">
-            <xs:pattern value="\d{11}"/>
+            <xs:pattern value="\d{13}"/>
         </xs:restriction>
     </xs:simpleType> 
 	<xs:element name="record">
         <xs:complexType>
             <xs:sequence>
-                <xs:element name="patient_lbo" type="record:lbo"/>
+                <xs:element name="patient_jmbg" type="record:jmbg"/>
                 <xs:element name="doctor_id" type="xs:anyURI"/>
             </xs:sequence>
             

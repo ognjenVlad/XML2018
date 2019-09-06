@@ -22,7 +22,7 @@ public class AppointmentsService {
 	
 	public void save(Appointment a) {
 		try {
-			a.setId(a.getDoctorId() + "_" + a.getPatientLbo());
+			a.setId(a.getDoctorId() + "_" + a.getPatientJmbg());
 			appointmentsRepository.save(a);
 			System.out.println("123" + a.getDoctorId());
 			Doctor doc = doctorRepository.findById(a.getDoctorId());
@@ -54,7 +54,7 @@ public class AppointmentsService {
 		appointment.setDoctorId(dto.getDoctorId());
 		appointment.setId(dto.getId());
 		appointment.setIsConfirmed(dto.getIsConfirmed());
-		appointment.setPatientLbo(dto.getPatientLbo());
+		appointment.setPatientJmbg(dto.getPatientJmbg());
 		appointment.setTime(dto.getTime());
 		appointment.setDate(dto.getDate());
 		return appointment;
