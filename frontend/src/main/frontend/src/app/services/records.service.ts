@@ -15,6 +15,15 @@ export class RecordsService {
       alert("Your personal doctor has been changed!")
     }).catch((error) => {
       
+    });
+  }
+
+  saveReport(record: Record) {
+    return this.http.post(`http://localhost:8080/record/create-report`, record).toPromise().
+    then(() => {
+      alert("Report created!")
+    }).catch((error) => {
+      
     }) ;;
   }
 

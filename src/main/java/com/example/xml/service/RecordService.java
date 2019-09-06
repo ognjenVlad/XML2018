@@ -4,14 +4,17 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.List;
 import org.w3c.dom.Node;
 import com.example.xml.model.record.Record;
+import com.example.xml.model.report.Report;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.xml.dtos.RecordDTO;
+import com.example.xml.dtos.ReportDTO;
 import com.example.xml.repository.RecordRepository;
 
 @Service
@@ -60,6 +63,13 @@ public class RecordService {
 		record.setDoctorId(dto.getDoctorId());
 		record.setPatientJmbg(dto.getPatientJmbg());
 		record.setId(recordId + dto.getPatientJmbg());
+		List<String> reportIds = new ArrayList<String>();
+		
+		for(ReportDTO r: dto.getReports()) {
+			System.out.println("ID:" +r.getId() );
+			reportIds.add(r.getId());
+		}
+		record.setReportIds(reportIds);
 		return record;
 	}
 	

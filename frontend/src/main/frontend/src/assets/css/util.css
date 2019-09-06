@@ -10,3 +10,8 @@
 .color-black {
   color: black;
 }
+
+.button-center {
+  justify-content: center;
+  display: flex;
+}

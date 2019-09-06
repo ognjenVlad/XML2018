@@ -31,6 +31,8 @@ import { RecordsComponent } from './components/records/records.component';
 import { PatientsComponent } from './components/patients/patients.component';
 import { DoctorGuard } from './shared/guards/doctor.guard';
 import { ChangePatientModalComponent } from './components/change-patient-modal/change-patient-modal.component';
+import { ReportsComponent } from './components/reports/reports.component';
+import { QuillModule } from 'ngx-quill'
 
 @NgModule({
   declarations: [
@@ -47,7 +49,8 @@ import { ChangePatientModalComponent } from './components/change-patient-modal/c
     GeneratePdfComponent,
     RecordsComponent,
     PatientsComponent,
-    ChangePatientModalComponent
+    ChangePatientModalComponent,
+    ReportsComponent
   ],
   imports: [
     BrowserModule,
@@ -62,7 +65,8 @@ import { ChangePatientModalComponent } from './components/change-patient-modal/c
     MatInputModule,
     BrowserAnimationsModule,
     MatDialogModule,
-    MatCheckboxModule
+    MatCheckboxModule,
+    QuillModule.forRoot()
   ],
   exports: [MatDatepickerModule],
   providers: [JwtService, AnonymousGuard, AuthGuard, TechnicianGuard, PatientGuard, DoctorGuard],

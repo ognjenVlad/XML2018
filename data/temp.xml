@@ -2,4 +2,5 @@
 <record:record xmlns:record="http://www.health_care.com/record" xmlns="http://www.w3.org/ns/rdfa#" xmlns:xs="http://www.w3.org/2001/XMLSchema#" xmlns:hs="http://www.health_care.com/rdf/hs/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="http://www.health_care.com/record/1212121212121" xsi:schemaLocation="/Users/ognjen/Desktop/XML2018/target/classes/schema/record.xsd">
     <record:patient_jmbg>1212121212121</record:patient_jmbg>
     <record:doctor_id>123123123123</record:doctor_id>
+    <record:report_ids>1212121212121_45816376</record:report_ids>
 </record:record>

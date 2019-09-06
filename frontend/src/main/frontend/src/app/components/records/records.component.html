@@ -3,12 +3,18 @@
   <tr>
     <th>Patient JMBG</th>
     <th>Doctor ID</th>
+    <th class="u-position--center">View</th>
   </tr>
   </thead>
   <tbody>
     <tr>
       <td>{{record.patientJmbg}}</td>
       <td>{{record.doctorId}}</td>
+      <td md-button class="submit-btn" class="u-position--center">
+        <button class="btn btn-info" (click)="openLink()">
+          <i class="fa fa-eye"></i>
+        </button>
+      </td>
     </tr>
   </tbody>
 </table>

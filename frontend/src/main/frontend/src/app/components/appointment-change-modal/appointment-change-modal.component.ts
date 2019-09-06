@@ -64,7 +64,7 @@ export class AppointmentChangeModalComponent implements OnInit {
     const date = moment(newDate).format(this.dateFormat);
     console.log(this.form.controls.appointment.value);
     const newAppointment = {
-      patientLbo: this.data.patientLbo, 
+      patientJmbg: this.data.patientJmbg, 
       doctorId: this.data.doctorId, 
       id: this.data.id, 
       date: date, 

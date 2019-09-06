@@ -9,6 +9,8 @@
     <th>LBO</th>
     <th>Phone</th>
     <th class="u-position--center">Change</th>
+    <th class="u-position--center">View</th>
+    <th class="u-position--center">Create report</th>
   </tr>
   </thead>
   <tbody>
@@ -22,6 +24,16 @@
         <button class="btn btn-success"(click)="changePatient(item)">
           <i class="fa fa-edit"></i>
         </button>
+      </td>
+      <td md-button class="submit-btn" class="u-position--center">
+        <button class="btn btn-info" (click)="openLink(item)">
+          <i class="fa fa-eye"></i>
+        </button>
+      </td>
+      <td md-button class="submit-btn" class="u-position--center">
+        <a [routerLink]="['/report', item.jmbg]" class="btn btn-light" (click)="createReport(item)">
+          <i class="fa fa-sticky-note"></i>
+        </a>
       </td>
       </tr>
   </tbody>

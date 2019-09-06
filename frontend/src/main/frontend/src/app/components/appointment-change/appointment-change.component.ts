@@ -3,7 +3,6 @@ import { PatientsService } from 'src/app/services/patients.service';
 import { Doctor } from 'src/app/models/doctor.model';
 import { MatDialogConfig, MatDialog } from '@angular/material';
 import { AppointmentChangeModalComponent } from '../appointment-change-modal/appointment-change-modal.component';
-import { FormBuilder } from '@angular/forms';
 
 @Component({
   selector: 'app-appointment-change',
@@ -38,11 +37,9 @@ export class AppointmentChangeComponent implements OnInit {
     dialogConfig.data = {...item};
     let dialogRef = this.dialog.open(AppointmentChangeModalComponent, dialogConfig);
     dialogRef.componentInstance.onChange.subscribe((item) => {
-      console.log(item);
       const index = this.appointments.findIndex((appointment) => appointment.id === item.id);
       this.appointments[index] = item;
     });
-    console.log(item);
   }
 
 }

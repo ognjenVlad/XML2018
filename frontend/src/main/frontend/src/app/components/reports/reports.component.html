@@ -1,0 +1,15 @@
+
+<form>
+  <quill-editor
+    [styles]="{ backgroundColor: '' }"
+    [formControl]="form.controls['editor']">
+  </quill-editor>
+
+  <td md-button class="button-center">
+    <button style="width: 20rem;" class="btn btn-success" (click)="submit()">
+      <i class="fa fa-save"></i>
+      Create report
+    </button>
+  </td>
+
+</form>

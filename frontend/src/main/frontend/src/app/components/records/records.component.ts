@@ -24,4 +24,8 @@ export class RecordsComponent implements OnInit {
     });
   }
 
+  openLink() {
+    window.open(`http://localhost:8181/exist/rest/db/health_care_system/records/${this.record.patientJmbg}?_xsl=../record.xsl`,'_blank');
+  }
+
 }

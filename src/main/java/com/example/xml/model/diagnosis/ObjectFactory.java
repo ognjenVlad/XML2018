@@ -6,7 +6,7 @@
 //
 
 
-package com.example.xml.model;
+package com.example.xml.model.diagnosis;
 
 import javax.xml.bind.annotation.XmlRegistry;
 

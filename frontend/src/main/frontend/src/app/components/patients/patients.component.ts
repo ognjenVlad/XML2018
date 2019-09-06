@@ -3,6 +3,7 @@ import { PatientsService } from 'src/app/services/patients.service';
 import { Patient } from 'src/app/models/patient.model';
 import { MatDialog, MatDialogConfig } from '@angular/material';
 import { ChangePatientModalComponent } from '../change-patient-modal/change-patient-modal.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-patients',
@@ -33,7 +34,9 @@ export class PatientsComponent implements OnInit {
       const index = this.patients.findIndex((appointment) => appointment.id === item.id);
       this.patients[index] = item;
     });
-    console.log(item);
   }
 
+  openLink(patient) {
+    window.open(`http://localhost:8181/exist/rest/db/health_care_system/records/${patient.jmbg}?_xsl=../record.xsl`,'_blank');
+  }
 }

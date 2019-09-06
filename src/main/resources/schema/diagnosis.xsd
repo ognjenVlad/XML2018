@@ -1,0 +1,16 @@
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           xmlns:vc="http://www.w3.org/2007/XMLSchema-versioning" 
+           elementFormDefault="qualified"
+           vc:minVersion="1.1" 
+           targetNamespace="http://www.health_care.com/diagnosis"
+           xmlns:report="http://www.health_care.com/diagnosis">
+	<xs:element name="diagnosis">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="name" type="xs:string"/>
+            </xs:sequence>
+            
+     	<xs:attribute name="id" type="xs:anyURI" />
+       </xs:complexType>
+   	</xs:element>
+</xs:schema>

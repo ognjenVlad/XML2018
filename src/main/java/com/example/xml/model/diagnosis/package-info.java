@@ -6,4 +6,4 @@
 //
 
 @javax.xml.bind.annotation.XmlSchema(namespace = "http://www.health_care.com/diagnosis", elementFormDefault = javax.xml.bind.annotation.XmlNsForm.QUALIFIED)
-package com.example.xml.model;
+package com.example.xml.model.diagnosis;

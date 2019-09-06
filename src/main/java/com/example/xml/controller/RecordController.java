@@ -15,16 +15,19 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.core.io.Resource;
 import com.example.xml.dtos.RecordDTO;
 import com.example.xml.dtos.RegisterDTO;
+import com.example.xml.dtos.ReportDTO;
 import com.example.xml.model.patient.Patient;
 import com.example.xml.model.user.User;
 import com.example.xml.service.PatientService;
 import com.example.xml.service.RecordService;
+import com.example.xml.service.ReportService;
 import com.example.xml.service.TechnicianService;
 import com.itextpdf.text.DocumentException;
 import com.example.xml.model.record.Record;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.List;
 import java.io.File;
 
 @RestController
@@ -33,6 +36,9 @@ public class RecordController {
 
 	@Autowired
 	RecordService recordService;
+	
+	@Autowired
+	ReportService reportService;
 	
 	@Autowired
 	PatientService patientService;
@@ -53,7 +59,45 @@ public class RecordController {
 			method = RequestMethod.POST)
 	public ResponseEntity<Record> save(@RequestBody RecordDTO newRecord) {
 		Record u = this.recordService.mapDtoToRecord(newRecord);
-		this.recordService.save(u);
+		Record oldRecord = this.recordService.findByPatientJmbg(newRecord.getPatientJmbg());
+		if (oldRecord == null) {
+			this.recordService.save(u);			
+		} else {
+			oldRecord.setDoctorId(newRecord.getDoctorId());
+			this.recordService.save(oldRecord);	
+		}
+		return new ResponseEntity<Record>(u, HttpStatus.OK);
+    }
+	
+	@RequestMapping(value = "/create-report",
+			consumes = MediaType.APPLICATION_JSON_VALUE,
+            produces = MediaType.APPLICATION_JSON_VALUE,
+			method = RequestMethod.POST)
+	public ResponseEntity<Record> createReport(@RequestBody RecordDTO newRecord) {
+		ReportDTO report = newRecord.getReports().get(0);
+		
+		report.setId(newRecord.getPatientJmbg() + "_" + report.getTime().hashCode());
+		Record u = this.recordService.mapDtoToRecord(newRecord);
+		
+		System.out.println("SIZE:::::::" + u.getReportIds().size());
+		Record oldRecord = this.recordService.findByPatientJmbg(newRecord.getPatientJmbg());
+
+		if (newRecord.getReports().size() > 0) {
+			this.reportService.save(newRecord);			
+		}
+		
+		if (oldRecord == null) {
+			this.recordService.save(u);			
+		} else {
+			List<String> oldList = oldRecord.getReportIds();
+			oldList.add(u.getReportIds().get(0));
+			
+			oldRecord.setReportIds(oldList);
+			System.out.println(oldRecord.getReportIds().get(0));
+			System.out.println("NOVI" + oldRecord.getReportIds().size());
+			this.recordService.save(oldRecord);	
+		}
+		
 		return new ResponseEntity<Record>(u, HttpStatus.OK);
     }
 	
