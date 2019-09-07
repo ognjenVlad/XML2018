@@ -6,6 +6,7 @@ import java.io.OutputStream;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.Marshaller;
 
+import org.dom4j.io.XMLWriter;
 import org.exist.xmldb.EXistResource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
@@ -39,12 +40,17 @@ public class ReportRepository {
 	        col = ConnectUtil.getOrCreateCollection(collectionId, 0, AuthenticationUtilities.loadProperties());
 	        res = (XMLResource) col.createResource(documentId, XMLResource.RESOURCE_TYPE);
 	        JAXBContext context = JAXBContext.newInstance("com.example.xml.model.report");
+
 	        Marshaller marshaller = context.createMarshaller();
 	        marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
+	        XMLWriter writer = new XMLWriter(os);
+	        writer.setEscapeText(false); // <----------------- this line
+	        // Attach the writer to the filter
 	        String path = new ClassPathResource("schema/report.xsd").getFile().getPath();
 	        marshaller.setProperty(Marshaller.JAXB_SCHEMA_LOCATION, path);
-	        marshaller.marshal(report, os);
+	        marshaller.marshal(report, writer);
 	        res.setContent(os);
+	        System.out.println("VREDNOST:::::::::::" +res.getContent().toString());
 	        col.storeResource(res);
         return res;
         

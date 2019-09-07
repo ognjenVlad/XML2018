@@ -7,6 +7,7 @@
     <th>LBO</th>
     <th>Phone</th>
     <th class="u-position--center">Generate pdf</th>
+    <th class="u-position--center">View</th>
   </tr>
   </thead>
   <tbody>
@@ -19,6 +20,11 @@
       <td md-button class="submit-btn" class="u-position--center">
         <button class="btn btn-success" (click)="download(item)">
           <i class="fa fa-download"></i>
+        </button>
+      </td>
+      <td md-button class="submit-btn" class="u-position--center">
+        <button class="btn btn-info" (click)="openLink(item)">
+          <i class="fa fa-eye"></i>
         </button>
       </td>
     </tr>

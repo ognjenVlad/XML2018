@@ -75,11 +75,10 @@ public class RecordController {
 			method = RequestMethod.POST)
 	public ResponseEntity<Record> createReport(@RequestBody RecordDTO newRecord) {
 		ReportDTO report = newRecord.getReports().get(0);
-		
+		System.out.println("VREDNOST HTML-a::::::::" + report.getOpinion());
 		report.setId(newRecord.getPatientJmbg() + "_" + report.getTime().hashCode());
 		Record u = this.recordService.mapDtoToRecord(newRecord);
 		
-		System.out.println("SIZE:::::::" + u.getReportIds().size());
 		Record oldRecord = this.recordService.findByPatientJmbg(newRecord.getPatientJmbg());
 
 		if (newRecord.getReports().size() > 0) {
