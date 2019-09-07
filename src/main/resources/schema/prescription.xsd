@@ -1,0 +1,38 @@
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           xmlns:vc="http://www.w3.org/2007/XMLSchema-versioning" 
+           elementFormDefault="qualified"
+           vc:minVersion="1.1" 
+           xmlns:hs="http://www.health_care.com/rdf/hs/"
+           targetNamespace="http://www.health_care.com/prescription"
+           xmlns:prescription="http://www.health_care.com/prescription">
+   	<xs:simpleType name="jmbg">
+        <xs:restriction base="xs:string">
+            <xs:pattern value="\d{13}"/>
+        </xs:restriction>
+    </xs:simpleType> 
+	<xs:element name="prescription">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="patient_jmbg" type="prescription:jmbg"/>
+                <xs:element name="doctor_id" type="xs:anyURI"/>
+                <xs:element name="drug" type="xs:string"/>
+                <xs:element name="date">
+                    <xs:simpleType>
+                        <xs:restriction base="xs:string">
+                            <xs:pattern value="\d{2}/\d{2}/\d{4}"/>
+                        </xs:restriction>
+                    </xs:simpleType>
+                </xs:element>
+                <xs:element name="time">
+                    <xs:simpleType>
+                        <xs:restriction base="xs:string">
+                            <xs:pattern value="[0-2]{1}[0-9]{1}:[0-5]{1}[0-9]{1}"/>
+                        </xs:restriction>
+                    </xs:simpleType>
+                </xs:element>
+            </xs:sequence>
+            
+     	<xs:attribute name="id" type="xs:anyURI" />
+       </xs:complexType>
+   	</xs:element>
+</xs:schema>

@@ -16,7 +16,9 @@
             <xs:sequence>
                 <xs:element name="patient_jmbg" type="record:jmbg"/>
                 <xs:element name="doctor_id" type="xs:anyURI"/>
-                <xs:element maxOccurs="unbounded" minOccurs="0" name="report_ids"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" type="xs:string" name="report_ids"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" type="xs:string" name="prescription_ids"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" type="xs:string" name="referral_ids"/>
             </xs:sequence>
             
      	<xs:attribute name="id" type="xs:anyURI" />

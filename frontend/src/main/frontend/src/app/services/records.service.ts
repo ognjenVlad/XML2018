@@ -27,6 +27,24 @@ export class RecordsService {
     }) ;;
   }
 
+  saveReferral(record: Record) {
+    return this.http.post(`http://localhost:8080/record/create-referral`, record).toPromise().
+    then(() => {
+      alert("Referral created!")
+    }).catch((error) => {
+      
+    }) ;;
+  }
+
+  savePrescription(record: Record) {
+    return this.http.post(`http://localhost:8080/record/create-prescription`, record).toPromise().
+    then(() => {
+      alert("Prescription created!")
+    }).catch((error) => {
+      
+    }) ;;
+  }
+
   download(id) {
     return this.http.get(`http://localhost:8080/record/download?id=${id}`, {responseType: 'blob'}).subscribe((response) => {
       let blob = new Blob([<Blob>response], { type: 'application/zip'});

@@ -15,9 +15,6 @@
 					<th>
                         <b>Doctor id</b>
                     </th>
-                    <th>
-                        <b>Reports</b>
-                    </th>
 	            </tr>
 	            <tr bgcolor="#c8e3d7">
 	            	<td>
@@ -34,6 +31,21 @@
                             <xsl:value-of select="record:record/record:doctor_id"/>
                         </a>
 	            	</td>
+            	</tr>
+    	    </table>
+    	    <table style="margin-top: 5rem;" border="1">
+    	        <tr bgcolor="#0377fc">
+    	            <th>
+                        <b>Reports</b>
+                    </th>
+                    <th>
+                        <b>Prescriptions</b>
+                    </th>
+                    <th>
+                        <b>Referrals</b>
+                    </th>
+    	        </tr>
+    	        <tr bgcolor="#c8e3d7">
 	            	<td>
 	            	    <ul>
     	                	<xsl:for-each select="record:record/record:report_ids">
@@ -42,6 +54,34 @@
                                         <xsl:value-of select="current()"/>
                                     </xsl:variable>
             	                    <a target="_blank" href="http://localhost:8181/exist/rest/db/health_care_system/reports/{$hyperlink}?_xsl=../report.xsl">
+                                        <xsl:value-of select="current()"/>
+                                    </a>
+                                </li>
+    	                	</xsl:for-each>
+    	                </ul>
+	            	</td>
+	            	<td>
+	            	    <ul>
+    	                	<xsl:for-each select="record:record/record:prescription_ids">
+                                <li>
+            	                	<xsl:variable name="hyperlink">
+                                        <xsl:value-of select="current()"/>
+                                    </xsl:variable>
+            	                    <a target="_blank" href="http://localhost:8181/exist/rest/db/health_care_system/prescriptions/{$hyperlink}?_xsl=../prescription.xsl">
+                                        <xsl:value-of select="current()"/>
+                                    </a>
+                                </li>
+    	                	</xsl:for-each>
+    	                </ul>
+	            	</td>
+	            	<td>
+	            	    <ul>
+    	                	<xsl:for-each select="record:record/record:referral_ids">
+                                <li>
+            	                	<xsl:variable name="hyperlink">
+                                        <xsl:value-of select="current()"/>
+                                    </xsl:variable>
+            	                    <a target="_blank" href="http://localhost:8181/exist/rest/db/health_care_system/referral/{$hyperlink}?_xsl=../referral.xsl">
                                         <xsl:value-of select="current()"/>
                                     </a>
                                 </li>

@@ -8,23 +8,23 @@
 	        <table border="1">
 	            <tr bgcolor="#0377fc">
 	            	<th>
-                                <b>Id</b>
-                            </th>
+                         <b>Id</b>
+                     </th>
 					<th>
-                                <b>Patient jmbg</b>
-                            </th>
+                        <b>Patient jmbg</b>
+                    </th>
 					<th>
-                                <b>Doctor id</b>
-                            </th>
+                        <b>Doctor id</b>
+                    </th>
 					<th>
-                                <b>Opinion</b>
-                            </th>
-					<th>
-                                <b>Date</b>
-                            </th>
-					<th>
-                                <b>Time</b>
-                            </th>
+	                      <b>Opinion</b>
+	                  </th>
+					<th style="width: 10%;">
+                        <b>Date</b>
+                    </th>
+					<th style="width: 10%;">
+                        <b>Time</b>
+                    </th>
 	            </tr>
 	            <tr bgcolor="#c8e3d7">
 	            	<td>

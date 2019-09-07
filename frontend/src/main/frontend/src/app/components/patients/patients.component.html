@@ -11,6 +11,8 @@
     <th class="u-position--center">Change</th>
     <th class="u-position--center">View</th>
     <th class="u-position--center">Create report</th>
+    <th class="u-position--center">Create referral</th>
+    <th class="u-position--center">Create prescription</th>
   </tr>
   </thead>
   <tbody>
@@ -31,7 +33,17 @@
         </button>
       </td>
       <td md-button class="submit-btn" class="u-position--center">
-        <a [routerLink]="['/report', item.jmbg]" class="btn btn-light" (click)="createReport(item)">
+        <a [routerLink]="['/report', item.jmbg]" class="btn btn-primary" (click)="createReport(item)">
+          <i class="fa fa-sticky-note"></i>
+        </a>
+      </td>
+      <td md-button class="submit-btn" class="u-position--center">
+        <a [routerLink]="['/referral', item.jmbg]" class="btn btn-primary">
+          <i class="fa fa-sticky-note"></i>
+        </a>
+      </td>
+      <td md-button class="submit-btn" class="u-position--center">
+        <a [routerLink]="['/prescription', item.jmbg]" class="btn btn-primary">
           <i class="fa fa-sticky-note"></i>
         </a>
       </td>

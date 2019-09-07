@@ -13,7 +13,9 @@ import com.example.xml.model.report.Report;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.example.xml.dtos.PrescriptionDTO;
 import com.example.xml.dtos.RecordDTO;
+import com.example.xml.dtos.ReferralDTO;
 import com.example.xml.dtos.ReportDTO;
 import com.example.xml.repository.RecordRepository;
 
@@ -65,11 +67,26 @@ public class RecordService {
 		record.setId(recordId + dto.getPatientJmbg());
 		List<String> reportIds = new ArrayList<String>();
 		
-		for(ReportDTO r: dto.getReports()) {
-			System.out.println("ID:" +r.getId() );
-			reportIds.add(r.getId());
+		if (dto.getReports() != null) {			
+			for(ReportDTO r: dto.getReports()) {
+				System.out.println("ID:" +r.getId() );
+				reportIds.add(r.getId());
+			}
+			record.setReportIds(reportIds);
 		}
-		record.setReportIds(reportIds);
+		
+		if (dto.getPrescriptions() != null) {			
+			for(PrescriptionDTO r: dto.getPrescriptions()) {
+				System.out.println("ID:" +r.getId() );
+				record.getPrescriptionIds().add(r.getId());
+			}
+		}
+		
+		if (dto.getReferrals() != null) {			
+			for(ReferralDTO r: dto.getReferrals()) {
+				record.getReferralIds().add(r.getId());
+			}
+		}
 		return record;
 	}
 	

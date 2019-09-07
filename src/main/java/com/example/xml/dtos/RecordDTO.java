@@ -14,6 +14,9 @@ public class RecordDTO implements Serializable {
     @NotNull
     private String doctorId;
     private List<ReportDTO> reports;
+    private List<ReferralDTO> referrals;
+    private List<PrescriptionDTO> prescriptions
+    ;
     
     public RecordDTO() { }
 
@@ -45,6 +48,22 @@ public class RecordDTO implements Serializable {
 
 	public void setReports(List<ReportDTO> reports) {
 		this.reports = reports;
+	}
+
+	public List<ReferralDTO> getReferrals() {
+		return referrals;
+	}
+
+	public void setReferrals(List<ReferralDTO> referrals) {
+		this.referrals = referrals;
+	}
+
+	public List<PrescriptionDTO> getPrescriptions() {
+		return prescriptions;
+	}
+
+	public void setPrescriptions(List<PrescriptionDTO> prescriptions) {
+		this.prescriptions = prescriptions;
 	}
 
 	@Override

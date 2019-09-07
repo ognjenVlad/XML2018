@@ -15,6 +15,8 @@ import { RecordsComponent } from './components/records/records.component';
 import { PatientsComponent } from './components/patients/patients.component';
 import { DoctorGuard } from './shared/guards/doctor.guard';
 import { ReportsComponent } from './components/reports/reports.component';
+import { CreatePrescriptionComponent } from './components/create-prescription/create-prescription.component';
+import { CreateReferralComponent } from './components/create-referral/create-referral.component';
 
 
 const routes: Routes = [
@@ -28,7 +30,9 @@ const routes: Routes = [
   { path: 'documentation', component: GeneratePdfComponent, canActivate: [TechnicianGuard]},
   { path: 'record', component: RecordsComponent, canActivate: [PatientGuard]},
   { path: 'patients', component: PatientsComponent, canActivate: [DoctorGuard]},
-  { path: 'report/:id', component: ReportsComponent, canActivate: [DoctorGuard]}
+  { path: 'report/:id', component: ReportsComponent, canActivate: [DoctorGuard]},
+  { path: 'prescription/:id', component: CreatePrescriptionComponent, canActivate: [DoctorGuard]},
+  { path: 'referral/:id', component: CreateReferralComponent, canActivate: [DoctorGuard]}
 ];
 @NgModule({
   imports: [RouterModule.forRoot(routes)],

@@ -32,7 +32,9 @@ import { PatientsComponent } from './components/patients/patients.component';
 import { DoctorGuard } from './shared/guards/doctor.guard';
 import { ChangePatientModalComponent } from './components/change-patient-modal/change-patient-modal.component';
 import { ReportsComponent } from './components/reports/reports.component';
-import { QuillModule } from 'ngx-quill'
+import { QuillModule } from 'ngx-quill';
+import { CreateReferralComponent } from './components/create-referral/create-referral.component';
+import { CreatePrescriptionComponent } from './components/create-prescription/create-prescription.component'
 
 @NgModule({
   declarations: [
@@ -50,7 +52,9 @@ import { QuillModule } from 'ngx-quill'
     RecordsComponent,
     PatientsComponent,
     ChangePatientModalComponent,
-    ReportsComponent
+    ReportsComponent,
+    CreateReferralComponent,
+    CreatePrescriptionComponent
   ],
   imports: [
     BrowserModule,

@@ -13,11 +13,15 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.core.io.Resource;
+
+import com.example.xml.dtos.PrescriptionDTO;
 import com.example.xml.dtos.RecordDTO;
+import com.example.xml.dtos.ReferralDTO;
 import com.example.xml.dtos.RegisterDTO;
 import com.example.xml.dtos.ReportDTO;
 import com.example.xml.model.patient.Patient;
 import com.example.xml.model.user.User;
+import com.example.xml.service.DocumentsService;
 import com.example.xml.service.PatientService;
 import com.example.xml.service.RecordService;
 import com.example.xml.service.ReportService;
@@ -39,6 +43,9 @@ public class RecordController {
 	
 	@Autowired
 	ReportService reportService;
+	
+	@Autowired
+	DocumentsService documentsService;
 	
 	@Autowired
 	PatientService patientService;
@@ -88,12 +95,63 @@ public class RecordController {
 		if (oldRecord == null) {
 			this.recordService.save(u);			
 		} else {
-			List<String> oldList = oldRecord.getReportIds();
-			oldList.add(u.getReportIds().get(0));
-			
-			oldRecord.setReportIds(oldList);
+			oldRecord.getReportIds().add(u.getReportIds().get(0));
 			System.out.println(oldRecord.getReportIds().get(0));
 			System.out.println("NOVI" + oldRecord.getReportIds().size());
+			this.recordService.save(oldRecord);	
+		}
+		
+		return new ResponseEntity<Record>(u, HttpStatus.OK);
+    }
+	
+	@RequestMapping(value = "/create-prescription",
+			consumes = MediaType.APPLICATION_JSON_VALUE,
+            produces = MediaType.APPLICATION_JSON_VALUE,
+			method = RequestMethod.POST)
+	public ResponseEntity<Record> createPrescription(@RequestBody RecordDTO newRecord) {
+		PrescriptionDTO prescription = newRecord.getPrescriptions().get(0);
+		prescription.setId(newRecord.getPatientJmbg() + "_" + prescription.getTime().hashCode());
+		Record u = this.recordService.mapDtoToRecord(newRecord);
+		
+		Record oldRecord = this.recordService.findByPatientJmbg(newRecord.getPatientJmbg());
+
+		if (newRecord.getPrescriptions().size() > 0) {
+			this.documentsService.createPrescription(prescription);			
+		}
+		
+		if (oldRecord == null) {
+			this.recordService.save(u);			
+		} else {
+			List<String> oldList = oldRecord.getPrescriptionIds();
+			oldList.add(u.getPrescriptionIds().get(0));
+			this.recordService.save(oldRecord);	
+		}
+		
+		return new ResponseEntity<Record>(u, HttpStatus.OK);
+    }
+	
+	@RequestMapping(value = "/create-referral",
+			consumes = MediaType.APPLICATION_JSON_VALUE,
+            produces = MediaType.APPLICATION_JSON_VALUE,
+			method = RequestMethod.POST)
+	public ResponseEntity<Record> createReferral(@RequestBody RecordDTO newRecord) {
+		ReferralDTO referral = newRecord.getReferrals().get(0);
+		referral.setId(newRecord.getPatientJmbg() + "_" + referral.getTime().hashCode());
+		Record u = this.recordService.mapDtoToRecord(newRecord);
+		
+		Record oldRecord = this.recordService.findByPatientJmbg(newRecord.getPatientJmbg());
+
+		if (newRecord.getReferrals().size() > 0) {
+			this.documentsService.createReferral(referral);			
+		}
+		
+		if (oldRecord == null) {
+			this.recordService.save(u);			
+		} else {
+			List<String> oldList = oldRecord.getReferralIds();
+			oldList.add(u.getReferralIds().get(0));
+			System.out.println(oldRecord.getReferralIds().get(0));
+			System.out.println("NOVI" + oldRecord.getReferralIds().size());
 			this.recordService.save(oldRecord);	
 		}
 		
