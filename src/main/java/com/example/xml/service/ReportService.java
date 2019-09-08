@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.example.xml.dtos.RecordDTO;
 import com.example.xml.dtos.ReportDTO;
 import com.example.xml.model.record.Record;
+import com.example.xml.model.referral.Referral;
 import com.example.xml.model.report.Report;
 import com.example.xml.repository.ReportRepository;
 
@@ -29,6 +30,16 @@ public class ReportService {
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
+		}
+	}
+	
+	public List<Report> getReportsByJmbg(String jmbg) {
+		try {
+			
+			return reportRepository.getReportsByJmbg(jmbg);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
 		}
 	}
 	

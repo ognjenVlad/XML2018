@@ -24,6 +24,10 @@ export class GeneratePdfComponent implements OnInit {
     this.recordsService.download(item.jmbg);
   }
 
+  downloadAnon(item) {
+    this.recordsService.downloadAnon(item.jmbg);
+  }
+
   openLink(patient) {
     window.open(`http://localhost:8181/exist/rest/db/health_care_system/records/${patient.jmbg}?_xsl=../record.xsl`,'_blank');
   }

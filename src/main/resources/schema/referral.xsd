@@ -10,29 +10,30 @@
             <xs:pattern value="\d{13}"/>
         </xs:restriction>
     </xs:simpleType> 
-	<xs:element name="referral">
-        <xs:complexType>
-            <xs:sequence>
-                <xs:element name="patient_jmbg" type="referral:jmbg"/>
-                <xs:element name="to_doctor_id" type="xs:anyURI"/>
-                <xs:element name="doctor_id" type="xs:anyURI"/>
-                <xs:element name="date">
-                    <xs:simpleType>
-                        <xs:restriction base="xs:string">
-                            <xs:pattern value="\d{2}/\d{2}/\d{4}"/>
-                        </xs:restriction>
-                    </xs:simpleType>
-                </xs:element>
-                <xs:element name="time">
-                    <xs:simpleType>
-                        <xs:restriction base="xs:string">
-                            <xs:pattern value="[0-2]{1}[0-9]{1}:[0-5]{1}[0-9]{1}"/>
-                        </xs:restriction>
-                    </xs:simpleType>
-                </xs:element>
-            </xs:sequence>
-            
-     	<xs:attribute name="id" type="xs:anyURI" />
-       </xs:complexType>
+    <xs:complexType name="referral">
+         <xs:sequence>
+             <xs:element name="patient_jmbg" type="referral:jmbg"/>
+             <xs:element name="to_doctor_id"/>
+             <xs:element name="doctor_id" type="xs:anyURI"/>
+             <xs:element name="date">
+                 <xs:simpleType>
+                     <xs:restriction base="xs:string">
+                         <xs:pattern value="\d{2}/\d{2}/\d{4}"/>
+                     </xs:restriction>
+                 </xs:simpleType>
+             </xs:element>
+             <xs:element name="time">
+                 <xs:simpleType>
+                     <xs:restriction base="xs:string">
+                         <xs:pattern value="[0-2]{1}[0-9]{1}:[0-5]{1}[0-9]{1}"/>
+                     </xs:restriction>
+                 </xs:simpleType>
+             </xs:element>
+         </xs:sequence>
+         
+  	<xs:attribute name="id" type="xs:anyURI" />
+    </xs:complexType>
+	<xs:element name="referral" type="referral:referral">
+        
    	</xs:element>
 </xs:schema>

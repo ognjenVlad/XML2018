@@ -34,7 +34,7 @@
 	            		<xsl:variable name="hyperlink">
                                     <xsl:value-of select="report:report/report:patient_jmbg"/>
                                 </xsl:variable>
-	                    <a href="http://localhost:8181/exist/rest/db/health_care_system/pacients/{$hyperlink}">
+	                    <a href="http://localhost:8181/exist/rest/db/health_care_system/pacients/{$hyperlink}?_xsl=../patient.xsl">
                            <xsl:value-of select="report:report/report:patient_jmbg"/>
                        </a>
                    </td>
@@ -42,7 +42,7 @@
 		            	<xsl:variable name="hyperlink">
                                     <xsl:value-of select="report:report/report:doctor_id"/>
                                 </xsl:variable>
-	                    <a href="http://localhost:8181/exist/rest/db/health_care_system/doctors/{$hyperlink}">
+	                    <a href="http://localhost:8181/exist/rest/db/health_care_system/doctors/{$hyperlink}?_xsl=../doctors.xsl">
                                     <xsl:value-of select="report:report/report:doctor_id"/>
                                 </a>
 	            	</td>

@@ -70,7 +70,7 @@ public class Prescription {
     @XmlSchemaType(name = "anyURI")
     protected String doctorId;
     @XmlElement(required = true)
-    protected String drug;
+    protected Object drug;
     @XmlElement(required = true)
     protected String date;
     @XmlElement(required = true)
@@ -135,7 +135,7 @@ public class Prescription {
      *     {@link String }
      *     
      */
-    public String getDrug() {
+    public Object getDrug() {
         return drug;
     }
 

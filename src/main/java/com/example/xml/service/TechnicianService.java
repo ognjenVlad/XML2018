@@ -20,7 +20,9 @@ public class TechnicianService {
 	public static final String OUTPUT_FILE = "gen/output.pdf";
 
 	public static final String INPUT_FILE = "data/temp.xml";
-	public static final String XSL_FILE = "src/main/resources/xsl/record.xsl";
+	public static final String XSL_FILE = "src/main/resources/xsl/record-full.xsl";
+	
+	public static final String XSL_FILE_ANON = "src/main/resources/xsl/record-anon.xsl";
 	
 	public final static String userId = "http://www.health_care.com/technician/";
 	@Autowired
@@ -80,6 +82,30 @@ public class TechnicianService {
 		PDFTransformer pdfTransformer = new PDFTransformer();
 		
 		pdfTransformer.generateHTML(INPUT_FILE, XSL_FILE);
+		pdfTransformer.generatePDF(OUTPUT_FILE);
+		
+		System.out.println("[INFO] From file \"" + XSL_FILE + "\" xsl.");
+		System.out.println("[INFO] File \"" + OUTPUT_FILE + "\" generated successfully.");
+		System.out.println("[INFO] End.");
+		
+		return pdfFile;
+    
+	}
+	
+	public File generatePdfAnon() throws IOException, DocumentException {
+
+    	System.out.println("[INFO] " + PDFTransformer.class.getSimpleName());
+    	
+    	File pdfFile = new File(OUTPUT_FILE);
+    	
+		if (!pdfFile.getParentFile().exists()) {
+			System.out.println("[INFO] A new directory is created: " + pdfFile.getParentFile().getAbsolutePath() + ".");
+			pdfFile.getParentFile().mkdir();
+		}
+    	
+		PDFTransformer pdfTransformer = new PDFTransformer();
+		
+		pdfTransformer.generateHTML(INPUT_FILE, XSL_FILE_ANON);
 		pdfTransformer.generatePDF(OUTPUT_FILE);
 		
 		System.out.println("[INFO] File \"" + OUTPUT_FILE + "\" generated successfully.");

@@ -21,13 +21,18 @@
                         <xsl:value-of select="record:record/@id"/>
                     </td>
 	            	<td>
+	            	<xsl:variable name="hyperlink">
+                                    <xsl:value-of select="record:record/record:patient_jmbg"/>
+                                </xsl:variable>
+	                    <a href="http://localhost:8181/exist/rest/db/health_care_system/pacients/{$hyperlink}?_xsl=../patient.xsl">
                         <xsl:value-of select="record:record/record:patient_jmbg"/>
+                        </a>
                     </td>
 	            	<td>
 		            	<xsl:variable name="hyperlink">
                             <xsl:value-of select="record:record/record:doctor_id"/>
                         </xsl:variable>
-	                    <a href="http://localhost:8181/exist/rest/db/health_care_system/doctors/{$hyperlink}">
+	                    <a href="http://localhost:8181/exist/rest/db/health_care_system/doctors/{$hyperlink}?_xsl=../doctor.xsl">
                             <xsl:value-of select="record:record/record:doctor_id"/>
                         </a>
 	            	</td>

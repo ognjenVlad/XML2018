@@ -10,12 +10,11 @@
             <xs:pattern value="\d{13}"/>
         </xs:restriction>
     </xs:simpleType> 
-	<xs:element name="prescription">
-        <xs:complexType>
+    <xs:complexType name="prescription">
             <xs:sequence>
                 <xs:element name="patient_jmbg" type="prescription:jmbg"/>
                 <xs:element name="doctor_id" type="xs:anyURI"/>
-                <xs:element name="drug" type="xs:string"/>
+                <xs:element name="drug"/>
                 <xs:element name="date">
                     <xs:simpleType>
                         <xs:restriction base="xs:string">
@@ -34,5 +33,7 @@
             
      	<xs:attribute name="id" type="xs:anyURI" />
        </xs:complexType>
+	<xs:element name="prescription" type="prescription:prescription">
+        
    	</xs:element>
 </xs:schema>

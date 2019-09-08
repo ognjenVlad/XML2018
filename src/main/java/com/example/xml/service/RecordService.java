@@ -7,7 +7,12 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import org.w3c.dom.Node;
+
+import com.example.xml.model.patient.Patient;
+import com.example.xml.model.prescription.Prescription;
 import com.example.xml.model.record.Record;
+import com.example.xml.model.recordFull.RecordFull;
+import com.example.xml.model.referral.Referral;
 import com.example.xml.model.report.Report;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,6 +41,14 @@ public class RecordService {
 	public void saveRecordToFile(Record record) {
 		try {
 			recordRepository.saveRecordToFile(record);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void saveFullRecordToFile(RecordFull record) {
+		try {
+			recordRepository.saveFullRecordToFile(record);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -88,6 +101,18 @@ public class RecordService {
 			}
 		}
 		return record;
+	}
+	
+	public RecordFull mapFullRecord(Record r, Patient p, List<Referral> referrals, List<Prescription> prescriptions, List<Report> reports) {
+		RecordFull newRecord = new RecordFull();
+		newRecord.setPatientName(p.getName().getValue());
+		newRecord.setPatientLbo(p.getLbo());
+		newRecord.setPatientJmbg(p.getJmbg());
+		newRecord.setPatientLastname(p.getLastname());
+		newRecord.setReferrals(referrals);
+		newRecord.setPrescriptions(prescriptions);
+		newRecord.setReport(reports);
+		return newRecord;
 	}
 	
 	public List<Record> search(String term) {

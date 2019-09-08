@@ -38,6 +38,25 @@ public class DocumentsService {
 		}
 	}
 	
+	public List<Referral> getRefferalsByJmbg(String jmbg) {
+		try {
+			
+			return documentsRepository.getRefferalsByJmbg(jmbg);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
+	public List<Prescription> getPrecscriptionsByJmbg(String jmbg) {
+		try {
+			
+			return documentsRepository.getPrecscriptionsByJmbg(jmbg);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
 	public Prescription mapPrescription(PrescriptionDTO dto) {
 		Prescription prescription = new Prescription();
 		prescription.setDoctorId(dto.getDoctorId());

@@ -20,7 +20,9 @@ import com.example.xml.dtos.ReferralDTO;
 import com.example.xml.dtos.RegisterDTO;
 import com.example.xml.dtos.ReportDTO;
 import com.example.xml.model.patient.Patient;
+import com.example.xml.model.prescription.Prescription;
 import com.example.xml.model.user.User;
+import com.example.xml.service.DoctorServiceImpl;
 import com.example.xml.service.DocumentsService;
 import com.example.xml.service.PatientService;
 import com.example.xml.service.RecordService;
@@ -28,6 +30,10 @@ import com.example.xml.service.ReportService;
 import com.example.xml.service.TechnicianService;
 import com.itextpdf.text.DocumentException;
 import com.example.xml.model.record.Record;
+import com.example.xml.model.recordFull.RecordFull;
+import com.example.xml.model.referral.Referral;
+import com.example.xml.model.report.Report;
+
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -52,6 +58,9 @@ public class RecordController {
 	
 	@Autowired
 	TechnicianService technicianService;
+	
+	@Autowired
+	DoctorServiceImpl doctorsService;
 	
 	@RequestMapping(method = RequestMethod.GET)
     public ResponseEntity<Record> getRecordById(@RequestParam String id) throws Exception{
@@ -158,14 +167,46 @@ public class RecordController {
 		return new ResponseEntity<Record>(u, HttpStatus.OK);
     }
 	
+	@RequestMapping(path = "/download-anon", method = RequestMethod.GET)
+	public ResponseEntity<Resource> downloadAnon(String id) throws IOException, DocumentException {
+		Patient p = this.patientService.findById(id);
+		Record r = this.recordService.findByPatientJmbg(p.getLbo());
+		List<Referral> referrals = this.documentsService.getRefferalsByJmbg(p.getJmbg()); 
+		List<Prescription> prescription = this.documentsService.getPrecscriptionsByJmbg(p.getJmbg()); 
+		List<Report> reports = this.reportService.getReportsByJmbg(p.getJmbg()); 
+		RecordFull newRecord =this.recordService.mapFullRecord(r, p, referrals, prescription, reports);
+		this.recordService.saveFullRecordToFile(newRecord);
+		File file = this.technicianService.generatePdfAnon();
+		System.out.println(reports.size());
+		System.out.println(referrals.size());
+		System.out.println(reports.get(4).getOpinion());
+		System.out.println(referrals.get(0).getToDoctorId());
+		System.out.println(prescription.get(0).getDrug());
+		System.out.println(file.getAbsolutePath());
+	    Path path = Paths.get(file.getAbsolutePath());
+	    ByteArrayResource resource = new ByteArrayResource(Files.readAllBytes(path));
+
+	    return ResponseEntity.ok()
+	    		.contentLength(file.length())
+	            .contentType(MediaType.parseMediaType("application/octet-stream"))
+	            .body(resource);
+	}
+	
 	@RequestMapping(path = "/download", method = RequestMethod.GET)
 	public ResponseEntity<Resource> download(String id) throws IOException, DocumentException {
 		Patient p = this.patientService.findById(id);
-		System.out.println("LBO JE " + p.getLbo());
 		Record r = this.recordService.findByPatientJmbg(p.getLbo());
-		System.out.println("AJ NADJI GA" + r.getPatientJmbg());
-		this.recordService.saveRecordToFile(r);
+		List<Referral> referrals = this.documentsService.getRefferalsByJmbg(p.getJmbg()); 
+		List<Prescription> prescription = this.documentsService.getPrecscriptionsByJmbg(p.getJmbg()); 
+		List<Report> reports = this.reportService.getReportsByJmbg(p.getJmbg()); 
+		RecordFull newRecord =this.recordService.mapFullRecord(r, p, referrals, prescription, reports);
+		this.recordService.saveFullRecordToFile(newRecord);
 		File file = this.technicianService.generatePdf();
+		System.out.println(reports.size());
+		System.out.println(referrals.size());
+		System.out.println(reports.get(4).getOpinion());
+		System.out.println(referrals.get(0).getToDoctorId());
+		System.out.println(prescription.get(0).getDrug());
 		System.out.println(file.getAbsolutePath());
 	    Path path = Paths.get(file.getAbsolutePath());
 	    ByteArrayResource resource = new ByteArrayResource(Files.readAllBytes(path));

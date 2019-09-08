@@ -4,6 +4,7 @@ import { Patient } from 'src/app/models/patient.model';
 import { MatDialog, MatDialogConfig } from '@angular/material';
 import { ChangePatientModalComponent } from '../change-patient-modal/change-patient-modal.component';
 import { Router } from '@angular/router';
+import { RecordsService } from 'src/app/services/records.service';
 
 @Component({
   selector: 'app-patients',
@@ -12,7 +13,7 @@ import { Router } from '@angular/router';
 })
 export class PatientsComponent implements OnInit {
   patients: Array<Patient>;
-  constructor(private patientsService: PatientsService, private dialog: MatDialog) { 
+  constructor(private patientsService: PatientsService, private recordsService: RecordsService, private dialog: MatDialog) { 
     this.patientsService.getAllPatients().subscribe((data: any) => {
       data = data.map((item) => {
         return {...item, name: item.name.value}
@@ -38,5 +39,9 @@ export class PatientsComponent implements OnInit {
 
   openLink(patient) {
     window.open(`http://localhost:8181/exist/rest/db/health_care_system/records/${patient.jmbg}?_xsl=../record.xsl`,'_blank');
+  }
+
+  download(item) {
+    this.recordsService.download(item.jmbg);
   }
 }

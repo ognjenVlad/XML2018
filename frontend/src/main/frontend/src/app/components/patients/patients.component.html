@@ -13,6 +13,7 @@
     <th class="u-position--center">Create report</th>
     <th class="u-position--center">Create referral</th>
     <th class="u-position--center">Create prescription</th>
+    <th class="u-position--center">Download</th>
   </tr>
   </thead>
   <tbody>
@@ -46,6 +47,11 @@
         <a [routerLink]="['/prescription', item.jmbg]" class="btn btn-primary">
           <i class="fa fa-sticky-note"></i>
         </a>
+      </td>
+      <td md-button class="submit-btn" class="u-position--center">
+        <button class="btn btn-success" (click)="download(item)">
+          <i class="fa fa-download"></i>
+        </button>
       </td>
       </tr>
   </tbody>

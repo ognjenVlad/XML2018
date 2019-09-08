@@ -1,0 +1,39 @@
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           xmlns:vc="http://www.w3.org/2007/XMLSchema-versioning" 
+           elementFormDefault="qualified"
+           vc:minVersion="1.1" 
+           xmlns="http://www.w3.org/ns/rdfa#"
+           xmlns:hs="http://www.health_care.com/rdf/hs/"
+           targetNamespace="http://www.health_care.com/record"
+           xmlns:referral="http://www.health_care.com/referral"
+           xmlns:prescription="http://www.health_care.com/prescription"
+           xmlns:report="http://www.health_care.com/report"
+           xmlns:record="http://www.health_care.com/record">
+           <xs:import namespace="http://www.health_care.com/report" schemaLocation="report.xsd"/>
+           <xs:import namespace="http://www.health_care.com/prescription" schemaLocation="prescription.xsd"/>
+           <xs:import namespace="http://www.health_care.com/referral" schemaLocation="referral.xsd"/>
+   	<xs:simpleType name="jmbg">
+        <xs:restriction base="xs:string">
+            <xs:pattern value="\d{13}"/>
+        </xs:restriction>
+    </xs:simpleType> 
+	<xs:element name="record-full">
+        <xs:complexType>
+            <xs:sequence>
+	            <xs:element name="patient_jmbg" type="record:jmbg"/>
+	            <xs:element name="patient_name" type="xs:string"/>
+	            <xs:element name="patient_lastname" type="xs:string"/>
+	            <xs:element name="patient_lbo" type="xs:string"/>
+                <xs:element name="doctor_id" type="xs:anyURI"/>
+                <xs:element name="doctor_name" type="xs:string"/>
+                <xs:element name="doctor_lastname" type="xs:string"/>
+                
+                <xs:element maxOccurs="unbounded" minOccurs="0" type="referral:referral" name="referrals"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" type="prescription:prescription" name="prescriptions"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" type="report:report" name="reports"/>
+            </xs:sequence>
+            
+     	<xs:attribute name="id" type="xs:anyURI" />
+       </xs:complexType>
+   	</xs:element>
+</xs:schema>

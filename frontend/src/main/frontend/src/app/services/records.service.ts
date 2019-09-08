@@ -59,4 +59,19 @@ export class RecordsService {
       }));
     });
   }
+
+  downloadAnon(id) {
+    return this.http.get(`http://localhost:8080/record/download-anon?id=${id}`, {responseType: 'blob'}).subscribe((response) => {
+      let blob = new Blob([<Blob>response], { type: 'application/zip'});
+      let link = document.createElement('a');
+      link.href = window.URL.createObjectURL(blob);
+      link.download = id + '_storage' + '.pdf';
+      link.dispatchEvent(
+        new MouseEvent(`click`, {
+          bubbles: true,
+          cancelable: true,
+          view: window
+      }));
+    });
+  }
 }

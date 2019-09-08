@@ -68,7 +68,7 @@ public class Referral {
     protected String patientJmbg;
     @XmlElement(name = "to_doctor_id", required = true)
     @XmlSchemaType(name = "anyURI")
-    protected String toDoctorId;
+    protected Object toDoctorId;
     @XmlElement(name = "doctor_id", required = true)
     @XmlSchemaType(name = "anyURI")
     protected String doctorId;
@@ -112,7 +112,7 @@ public class Referral {
      *     {@link String }
      *     
      */
-    public String getToDoctorId() {
+    public Object getToDoctorId() {
         return toDoctorId;
     }
 

@@ -3,6 +3,7 @@ package com.example.xml.repository;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.nio.charset.StandardCharsets;
@@ -18,6 +19,7 @@ import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
+import org.apache.commons.io.FileUtils;
 import org.apache.jena.query.QueryExecutionFactory;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.ModelFactory;
@@ -25,6 +27,7 @@ import org.apache.jena.update.UpdateExecutionFactory;
 import org.apache.jena.update.UpdateFactory;
 import org.apache.jena.update.UpdateProcessor;
 import org.apache.jena.update.UpdateRequest;
+import org.dom4j.io.XMLWriter;
 import org.exist.xmldb.EXistResource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
@@ -41,6 +44,7 @@ import org.xmldb.api.modules.XPathQueryService;
 
 import com.example.xml.model.patient.Patient;
 import com.example.xml.model.record.Record;
+import com.example.xml.model.recordFull.RecordFull;
 import com.example.xml.util.AuthenticationUtilities;
 import com.example.xml.util.ConnectUtil;
 import com.example.xml.util.DBData;
@@ -165,6 +169,25 @@ public class RecordRepository {
 	        String path = new ClassPathResource("schema/record.xsd").getFile().getPath();
 	        marshaller.setProperty(Marshaller.JAXB_SCHEMA_LOCATION, path);
 	        marshaller.marshal(record, file);
+	        marshaller.marshal(record, System.out);
+        } catch (JAXBException e) {
+            e.printStackTrace();
+        }
+    }
+	
+	public void saveFullRecordToFile(RecordFull record) throws  Exception{
+        try {
+        	ByteArrayOutputStream os = new ByteArrayOutputStream();
+        	File file = new File("data/temp.xml");
+	        JAXBContext context = JAXBContext.newInstance("com.example.xml.model.recordFull");
+	        Marshaller marshaller = context.createMarshaller();
+	        marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
+	        String path = new ClassPathResource("schema/record-full.xsd").getFile().getPath();
+	        marshaller.setProperty(Marshaller.JAXB_SCHEMA_LOCATION, path);
+	        XMLWriter writer = new XMLWriter(os);
+	        writer.setEscapeText(false);
+	        marshaller.marshal(record, writer);
+	        os.writeTo(new FileOutputStream("data/temp.xml"));
 	        marshaller.marshal(record, System.out);
         } catch (JAXBException e) {
             e.printStackTrace();
