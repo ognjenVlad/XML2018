@@ -96,8 +96,8 @@ public class PatientService  {
 		user.setPassword(dto.getPassword());
 		user.setUsername(dto.getUsername());
 		user.setId(userId + dto.getJmbg());
-		user.setLbo(dto.getJmbg());
-		user.setPhone(dto.getJmbg());
+		user.setLbo(dto.getLbo());
+		user.setPhone(dto.getPhone());
 		user.setRole(Roles.PATIENT.toString());
 		return user;
 	}

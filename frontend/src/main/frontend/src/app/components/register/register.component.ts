@@ -15,8 +15,9 @@ export class RegisterComponent implements OnInit {
     password: ['', Validators.required],
     name: ['', Validators.required],
     lastname: ['', Validators.required],
-    jmbg: ['', [Validators.required, Validators.minLength(13), Validators.maxLength(13)]]
-
+    jmbg: ['', [Validators.required, Validators.minLength(13), Validators.maxLength(13)]],
+    lbo: ['', [Validators.required, Validators.minLength(11), Validators.maxLength(11)]],
+    phone: ['']
   });
 
   constructor(private router: Router, private fb: FormBuilder, private authService: AuthService) { }
@@ -34,7 +35,9 @@ export class RegisterComponent implements OnInit {
         password: this.registerForm.get('password').value,
         name: this.registerForm.get('name').value,
         lastname: this.registerForm.get('lastname').value,
-        jmbg: this.registerForm.get('jmbg').value
+        jmbg: this.registerForm.get('jmbg').value,
+        lbo: this.registerForm.get('lbo').value,
+        phone: this.registerForm.get('phone').value
     }).subscribe((response) => {
       this.router.navigate(['home']);
     });

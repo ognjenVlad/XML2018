@@ -16,6 +16,10 @@ public class RegisterDTO implements Serializable {
     private String lastname;
     @NotNull
     private String jmbg;
+    @NotNull
+    private String lbo;
+    @NotNull
+    private String phone;
 
     public RegisterDTO() { }
 
@@ -51,6 +55,24 @@ public class RegisterDTO implements Serializable {
 
 	public void setJmbg(String jmbg) {
 		this.jmbg = jmbg;
+	}
+	
+	
+
+	public String getLbo() {
+		return lbo;
+	}
+
+	public void setLbo(String lbo) {
+		this.lbo = lbo;
+	}
+
+	public String getPhone() {
+		return phone;
+	}
+
+	public void setPhone(String phone) {
+		this.phone = phone;
 	}
 
 	public void setUsername(String username) { this.username = username; }

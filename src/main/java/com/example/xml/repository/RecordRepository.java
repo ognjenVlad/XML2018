@@ -135,6 +135,12 @@ public class RecordRepository {
                 } else if(n.getChildNodes().item(i).getNodeName().contains("doctor_id")){
                     ((org.w3c.dom.Element)n.getChildNodes().item(i)).setAttribute("property", "hs:doctor");
                     ((org.w3c.dom.Element)n.getChildNodes().item(i)).setAttribute("datatype", "xs:string");
+                } else if(n.getChildNodes().item(i).getNodeName().contains("report_ids")){
+                    ((org.w3c.dom.Element)n.getChildNodes().item(i)).setAttribute("property", "hs:reports");
+                } else if(n.getChildNodes().item(i).getNodeName().contains("prescription_ids")){
+                    ((org.w3c.dom.Element)n.getChildNodes().item(i)).setAttribute("property", "hs:prescriptions");
+                } else if(n.getChildNodes().item(i).getNodeName().contains("referral_ids")){
+                    ((org.w3c.dom.Element)n.getChildNodes().item(i)).setAttribute("property", "hs:referrals");
                 }
             }
             res.setContentAsDOM(n.getParentNode());
