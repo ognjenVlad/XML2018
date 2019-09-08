@@ -10,10 +10,13 @@ import org.w3c.dom.Node;
 
 import com.example.xml.model.patient.Patient;
 import com.example.xml.model.prescription.Prescription;
+import com.example.xml.model.prescription.PrescriptionPDF;
 import com.example.xml.model.record.Record;
 import com.example.xml.model.recordFull.RecordFull;
 import com.example.xml.model.referral.Referral;
+import com.example.xml.model.referral.ReferralPDF;
 import com.example.xml.model.report.Report;
+import com.example.xml.model.report.ReportPDF;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -103,7 +106,7 @@ public class RecordService {
 		return record;
 	}
 	
-	public RecordFull mapFullRecord(Record r, Patient p, List<Referral> referrals, List<Prescription> prescriptions, List<Report> reports) {
+	public RecordFull mapFullRecord(Record r, Patient p, List<ReferralPDF> referrals, List<PrescriptionPDF> prescriptions, List<ReportPDF> reports) {
 		RecordFull newRecord = new RecordFull();
 		newRecord.setPatientName(p.getName().getValue());
 		newRecord.setPatientLbo(p.getLbo());

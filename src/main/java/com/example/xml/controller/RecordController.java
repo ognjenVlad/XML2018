@@ -21,6 +21,7 @@ import com.example.xml.dtos.RegisterDTO;
 import com.example.xml.dtos.ReportDTO;
 import com.example.xml.model.patient.Patient;
 import com.example.xml.model.prescription.Prescription;
+import com.example.xml.model.prescription.PrescriptionPDF;
 import com.example.xml.model.user.User;
 import com.example.xml.service.DoctorServiceImpl;
 import com.example.xml.service.DocumentsService;
@@ -32,7 +33,9 @@ import com.itextpdf.text.DocumentException;
 import com.example.xml.model.record.Record;
 import com.example.xml.model.recordFull.RecordFull;
 import com.example.xml.model.referral.Referral;
+import com.example.xml.model.referral.ReferralPDF;
 import com.example.xml.model.report.Report;
+import com.example.xml.model.report.ReportPDF;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -171,9 +174,9 @@ public class RecordController {
 	public ResponseEntity<Resource> downloadAnon(String id) throws IOException, DocumentException {
 		Patient p = this.patientService.findById(id);
 		Record r = this.recordService.findByPatientJmbg(p.getLbo());
-		List<Referral> referrals = this.documentsService.getRefferalsByJmbg(p.getJmbg()); 
-		List<Prescription> prescription = this.documentsService.getPrecscriptionsByJmbg(p.getJmbg()); 
-		List<Report> reports = this.reportService.getReportsByJmbg(p.getJmbg()); 
+		List<ReferralPDF> referrals = this.documentsService.getRefferalsByJmbg(p.getJmbg()); 
+		List<PrescriptionPDF> prescription = this.documentsService.getPrecscriptionsByJmbg(p.getJmbg()); 
+		List<ReportPDF> reports = this.reportService.getReportsByJmbg(p.getJmbg()); 
 		RecordFull newRecord =this.recordService.mapFullRecord(r, p, referrals, prescription, reports);
 		this.recordService.saveFullRecordToFile(newRecord);
 		File file = this.technicianService.generatePdfAnon();
@@ -196,9 +199,9 @@ public class RecordController {
 	public ResponseEntity<Resource> download(String id) throws IOException, DocumentException {
 		Patient p = this.patientService.findById(id);
 		Record r = this.recordService.findByPatientJmbg(p.getLbo());
-		List<Referral> referrals = this.documentsService.getRefferalsByJmbg(p.getJmbg()); 
-		List<Prescription> prescription = this.documentsService.getPrecscriptionsByJmbg(p.getJmbg()); 
-		List<Report> reports = this.reportService.getReportsByJmbg(p.getJmbg()); 
+		List<ReferralPDF> referrals = this.documentsService.getRefferalsByJmbg(p.getJmbg()); 
+		List<PrescriptionPDF> prescription = this.documentsService.getPrecscriptionsByJmbg(p.getJmbg()); 
+		List<ReportPDF> reports = this.reportService.getReportsByJmbg(p.getJmbg()); 
 		RecordFull newRecord =this.recordService.mapFullRecord(r, p, referrals, prescription, reports);
 		this.recordService.saveFullRecordToFile(newRecord);
 		File file = this.technicianService.generatePdf();

@@ -43,5 +43,9 @@ public class ObjectFactory {
     public Referral createReferral() {
         return new Referral();
     }
+    
+    public ReferralPDF createReferralPDF() {
+        return new ReferralPDF();
+    }
 
 }

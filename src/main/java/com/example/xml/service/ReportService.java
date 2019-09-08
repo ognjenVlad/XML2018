@@ -11,6 +11,7 @@ import com.example.xml.dtos.ReportDTO;
 import com.example.xml.model.record.Record;
 import com.example.xml.model.referral.Referral;
 import com.example.xml.model.report.Report;
+import com.example.xml.model.report.ReportPDF;
 import com.example.xml.repository.ReportRepository;
 
 
@@ -33,7 +34,7 @@ public class ReportService {
 		}
 	}
 	
-	public List<Report> getReportsByJmbg(String jmbg) {
+	public List<ReportPDF> getReportsByJmbg(String jmbg) {
 		try {
 			
 			return reportRepository.getReportsByJmbg(jmbg);

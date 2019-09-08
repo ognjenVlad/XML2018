@@ -26,6 +26,7 @@ import org.xmldb.api.modules.XPathQueryService;
 
 import com.example.xml.model.referral.Referral;
 import com.example.xml.model.report.Report;
+import com.example.xml.model.report.ReportPDF;
 import com.example.xml.util.AuthenticationUtilities;
 import com.example.xml.util.ConnectUtil;
 
@@ -80,7 +81,7 @@ public class ReportRepository {
         }
     }
 	
-	public List<Report> getReportsByJmbg(String jmbg) throws Exception {
+	public List<ReportPDF> getReportsByJmbg(String jmbg) throws Exception {
 		Database database = this.connectUtil.connectToDatabase(AuthenticationUtilities.loadProperties());
         DatabaseManager.registerDatabase(database);
     	String collectionId = "/db/health_care_system/reports";
@@ -92,14 +93,14 @@ public class ReportRepository {
 		ResourceSet result = xpathService.query(xpathExp);
         ResourceIterator i = result.getIterator();
         Resource next = null;
-        List<Report> reports = new ArrayList<Report>();
+        List<ReportPDF> reports = new ArrayList<ReportPDF>();
         while(i.hasMoreResources()) {
             try {
                 next = i.nextResource();
                 JAXBContext context = JAXBContext.newInstance("com.example.xml.model.report");
                 Unmarshaller unmarshaller = context.createUnmarshaller();
                 System.out.println("REPORT::" + ((XMLResource)next).getContentAsDOM());
-                reports.add((Report) unmarshaller.unmarshal(((XMLResource)next).getContentAsDOM()));
+                reports.add((ReportPDF) unmarshaller.unmarshal(((XMLResource)next).getContentAsDOM()));
             } finally {
                 try {
                     ((EXistResource)next).freeResources();

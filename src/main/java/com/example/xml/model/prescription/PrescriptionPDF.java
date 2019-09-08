@@ -10,6 +10,7 @@ package com.example.xml.model.prescription;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlAnyElement;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -62,15 +63,15 @@ import javax.xml.bind.annotation.XmlType;
     "time"
 })
 @XmlRootElement(name="prescription")
-public class Prescription {
+public class PrescriptionPDF {
 
     @XmlElement(name = "patient_jmbg", required = true)
     protected String patientJmbg;
     @XmlElement(name = "doctor_id", required = true)
     @XmlSchemaType(name = "anyURI")
     protected String doctorId;
-    @XmlElement(required = true)
-    protected String drug;
+    @XmlAnyElement
+    protected Object drug;
     @XmlElement(required = true)
     protected String date;
     @XmlElement(required = true)
@@ -147,7 +148,7 @@ public class Prescription {
      *     {@link String }
      *     
      */
-    public void setDrug(String value) {
+    public void setDrug(Object value) {
         this.drug = value;
     }
 

@@ -43,5 +43,9 @@ public class ObjectFactory {
     public Report createReport() {
         return new Report();
     }
+    
+    public ReportPDF createReportPDF() {
+        return new ReportPDF();
+    }
 
 }

@@ -12,7 +12,7 @@ public class PrescriptionDTO {
     
     private String id;
 
-    private Object drug;
+    private String drug;
     
     public PrescriptionDTO() {}
     
@@ -67,11 +67,11 @@ public class PrescriptionDTO {
 		this.id = id;
 	}
 
-	public Object getDrug() {
+	public String getDrug() {
 		return drug;
 	}
 
-	public void setDrug(Object opinion) {
+	public void setDrug(String opinion) {
 		this.drug = opinion;
 	}
 

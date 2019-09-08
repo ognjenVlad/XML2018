@@ -28,8 +28,10 @@ import org.xmldb.api.modules.XPathQueryService;
 import com.example.xml.dtos.PrescriptionDTO;
 import com.example.xml.dtos.ReferralDTO;
 import com.example.xml.model.prescription.Prescription;
+import com.example.xml.model.prescription.PrescriptionPDF;
 import com.example.xml.model.record.Record;
 import com.example.xml.model.referral.Referral;
+import com.example.xml.model.referral.ReferralPDF;
 import com.example.xml.model.report.Report;
 import com.example.xml.util.AuthenticationUtilities;
 import com.example.xml.util.ConnectUtil;
@@ -131,7 +133,7 @@ public class DocumentsRepository {
         }
     }
 	
-	public List<Referral> getRefferalsByJmbg(String jmbg) throws Exception {
+	public List<ReferralPDF> getRefferalsByJmbg(String jmbg) throws Exception {
 		Database database = this.connectUtil.connectToDatabase(AuthenticationUtilities.loadProperties());
         DatabaseManager.registerDatabase(database);
     	String collectionId = "/db/health_care_system/referral";
@@ -143,15 +145,14 @@ public class DocumentsRepository {
 		ResourceSet result = xpathService.query(xpathExp);
         ResourceIterator i = result.getIterator();
         Resource next = null;
-        List<Referral> referral = new ArrayList<Referral>();
+        List<ReferralPDF> referral = new ArrayList<ReferralPDF>();
         while(i.hasMoreResources()) {
             try {
                 next = i.nextResource();
                 JAXBContext context = JAXBContext.newInstance("com.example.xml.model.referral");
                 Unmarshaller unmarshaller = context.createUnmarshaller();
                 System.out.println("REFERAL::" + ((XMLResource)next).getContentAsDOM());
-                System.out.println(((Referral) unmarshaller.unmarshal(((XMLResource)next).getContentAsDOM())).getToDoctorId());
-                referral.add((Referral) unmarshaller.unmarshal(((XMLResource)next).getContentAsDOM()));
+                referral.add((ReferralPDF) unmarshaller.unmarshal(((XMLResource)next).getContentAsDOM()));
             } finally {
                 try {
                     ((EXistResource)next).freeResources();
@@ -164,7 +165,7 @@ public class DocumentsRepository {
         return referral;
 	}
 	
-	public List<Prescription> getPrecscriptionsByJmbg(String jmbg) throws Exception{
+	public List<PrescriptionPDF> getPrecscriptionsByJmbg(String jmbg) throws Exception{
 		Database database = this.connectUtil.connectToDatabase(AuthenticationUtilities.loadProperties());
         DatabaseManager.registerDatabase(database);
     	String collectionId = "/db/health_care_system/prescriptions";
@@ -176,13 +177,13 @@ public class DocumentsRepository {
 		ResourceSet result = xpathService.query(xpathExp);
         ResourceIterator i = result.getIterator();
         Resource next = null;
-        List<Prescription> prescription = new ArrayList<Prescription>();
+        List<PrescriptionPDF> prescription = new ArrayList<PrescriptionPDF>();
         while(i.hasMoreResources()) {
             try {
                 next = i.nextResource();
                 JAXBContext context = JAXBContext.newInstance("com.example.xml.model.prescription");
                 Unmarshaller unmarshaller = context.createUnmarshaller();
-                prescription.add((Prescription) unmarshaller.unmarshal(((XMLResource)next).getContentAsDOM()));
+                prescription.add((PrescriptionPDF) unmarshaller.unmarshal(((XMLResource)next).getContentAsDOM()));
             } finally {
                 try {
                     ((EXistResource)next).freeResources();

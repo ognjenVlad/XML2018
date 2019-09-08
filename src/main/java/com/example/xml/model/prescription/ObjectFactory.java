@@ -40,6 +40,15 @@ public class ObjectFactory {
      * Create an instance of {@link Prescription }
      * 
      */
+    public PrescriptionPDF createPrescription2() {
+        return new PrescriptionPDF();
+    }
+
+
+    /**
+     * Create an instance of {@link Prescription }
+     * 
+     */
     public Prescription createPrescription() {
         return new Prescription();
     }

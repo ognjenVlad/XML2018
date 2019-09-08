@@ -19,8 +19,11 @@ import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
 
 import com.example.xml.model.prescription.Prescription;
+import com.example.xml.model.prescription.PrescriptionPDF;
 import com.example.xml.model.referral.Referral;
+import com.example.xml.model.referral.ReferralPDF;
 import com.example.xml.model.report.Report;
+import com.example.xml.model.report.ReportPDF;
 
 
 /**
@@ -85,9 +88,9 @@ public class RecordFull {
     @XmlElement(name = "doctor_lastname", required = true)
     @XmlSchemaType(name = "anyURI")
     protected String doctorLastname;
-    protected List<Referral> referrals;
-    protected List<Prescription> prescriptions;
-    protected List<Report> reports;
+    protected List<ReferralPDF> referrals;
+    protected List<PrescriptionPDF> prescriptions;
+    protected List<ReportPDF> reports;
     @XmlAttribute(name = "id")
     @XmlSchemaType(name = "anyURI")
     protected String id;
@@ -212,15 +215,15 @@ public class RecordFull {
         this.doctorId = value;
     }
     
-    public void setReferrals(List<Referral> referrals) {
+    public void setReferrals(List<ReferralPDF> referrals) {
     	this.referrals = referrals;
     }
     
-    public void setPrescriptions(List<Prescription> prescriptions) {
+    public void setPrescriptions(List<PrescriptionPDF> prescriptions) {
     	this.prescriptions = prescriptions;
     }
     
-    public void setReport(List<Report> reports) {
+    public void setReport(List<ReportPDF> reports) {
     	this.reports = reports;
     }
 
@@ -294,9 +297,9 @@ public class RecordFull {
      * 
      * 
      */
-    public List<Referral> getReferrals() {
+    public List<ReferralPDF> getReferrals() {
         if (referrals == null) {
-            referrals = new ArrayList<Referral>();
+            referrals = new ArrayList<ReferralPDF>();
         }
         return this.referrals;
     }
@@ -323,9 +326,9 @@ public class RecordFull {
      * 
      * 
      */
-    public List<Prescription> getPrescriptions() {
+    public List<PrescriptionPDF> getPrescriptions() {
         if (prescriptions == null) {
-            prescriptions = new ArrayList<Prescription>();
+            prescriptions = new ArrayList<PrescriptionPDF>();
         }
         return this.prescriptions;
     }
@@ -352,9 +355,9 @@ public class RecordFull {
      * 
      * 
      */
-    public List<Report> getReports() {
+    public List<ReportPDF> getReports() {
         if (reports == null) {
-            reports = new ArrayList<Report>();
+            reports = new ArrayList<ReportPDF>();
         }
         return this.reports;
     }

@@ -11,8 +11,10 @@ import com.example.xml.dtos.RecordDTO;
 import com.example.xml.dtos.ReferralDTO;
 import com.example.xml.dtos.ReportDTO;
 import com.example.xml.model.prescription.Prescription;
+import com.example.xml.model.prescription.PrescriptionPDF;
 import com.example.xml.model.record.Record;
 import com.example.xml.model.referral.Referral;
+import com.example.xml.model.referral.ReferralPDF;
 import com.example.xml.repository.DocumentsRepository;
 
 
@@ -38,9 +40,8 @@ public class DocumentsService {
 		}
 	}
 	
-	public List<Referral> getRefferalsByJmbg(String jmbg) {
+	public List<ReferralPDF> getRefferalsByJmbg(String jmbg) {
 		try {
-			
 			return documentsRepository.getRefferalsByJmbg(jmbg);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -48,7 +49,7 @@ public class DocumentsService {
 		}
 	}
 	
-	public List<Prescription> getPrecscriptionsByJmbg(String jmbg) {
+	public List<PrescriptionPDF> getPrecscriptionsByJmbg(String jmbg) {
 		try {
 			
 			return documentsRepository.getPrecscriptionsByJmbg(jmbg);
