@@ -54,7 +54,7 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "", propOrder = {
+@XmlType(name = "report", propOrder = {
     "patientJmbg",
     "doctorId",
     "opinion",
@@ -62,7 +62,6 @@ import javax.xml.bind.annotation.XmlType;
     "date",
     "time"
 })
-@XmlRootElement(name = "report")
 public class Report {
 
     @XmlElement(name = "patient_jmbg", required = true)

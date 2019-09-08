@@ -53,14 +53,13 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "", propOrder = {
+@XmlType(name = "referral", propOrder = {
     "patientJmbg",
     "toDoctorId",
     "doctorId",
     "date",
     "time"
 })
-@XmlRootElement(name = "referral")
 public class Referral {
 
     @XmlElement(name = "patient_jmbg", required = true)
