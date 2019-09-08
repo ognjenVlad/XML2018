@@ -41,7 +41,7 @@ public class AppointmentsRepository {
 		Database database = this.connectUtil.connectToDatabase(AuthenticationUtilities.loadProperties());
         DatabaseManager.registerDatabase(database);
         String collectionId = "/db/health_care_system/appointments";
-        String documentId = appointment.getDoctorId() + "_" + appointment.getPatientJmbg();
+        String documentId = Integer.toString((appointment.getDoctorId() + "_" + appointment.getTime() + appointment.getDate()).hashCode());
         System.out.println(documentId);
         Collection col = null;
         XMLResource res = null;

@@ -202,12 +202,6 @@ public class RecordController {
 		RecordFull newRecord =this.recordService.mapFullRecord(r, p, referrals, prescription, reports);
 		this.recordService.saveFullRecordToFile(newRecord);
 		File file = this.technicianService.generatePdf();
-		System.out.println(reports.size());
-		System.out.println(referrals.size());
-		System.out.println(reports.get(4).getOpinion());
-		System.out.println(referrals.get(0).getToDoctorId());
-		System.out.println(prescription.get(0).getDrug());
-		System.out.println(file.getAbsolutePath());
 	    Path path = Paths.get(file.getAbsolutePath());
 	    ByteArrayResource resource = new ByteArrayResource(Files.readAllBytes(path));
 
