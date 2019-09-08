@@ -29,7 +29,7 @@ import javax.xml.bind.annotation.XmlType;
  *       &lt;sequence>
  *         &lt;element name="patient_jmbg" type="{http://www.health_care.com/prescription}jmbg"/>
  *         &lt;element name="doctor_id" type="{http://www.w3.org/2001/XMLSchema}anyURI"/>
- *         &lt;element name="drug" type="{http://www.w3.org/2001/XMLSchema}string"/>
+ *         &lt;element name="drug" type="{http://www.w3.org/2001/XMLSchema}anyType""/>
  *         &lt;element name="date">
  *           &lt;simpleType>
  *             &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string">
@@ -147,7 +147,7 @@ public class Prescription {
      *     {@link String }
      *     
      */
-    public void setDrug(String value) {
+    public void setDrug(Object value) {
         this.drug = value;
     }
 
